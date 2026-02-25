@@ -1,6 +1,6 @@
-# SpigotEssentials
+# PaperEssentials
 
-A lightweight essentials plugin for Spigot/Bukkit servers with essential commands and features.
+A lightweight essentials plugin for Paper servers with essential commands and features.
 
 ## Features
 
@@ -14,8 +14,8 @@ A lightweight essentials plugin for Spigot/Bukkit servers with essential command
 
 ## Requirements
 
-- Spigot/Paper 1.21+
-- Java 17+
+- Paper 1.21+
+- Java 21+
 
 ## Installation
 
@@ -161,13 +161,13 @@ spawn: "world;x;y;z;yaw;pitch"
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/SpigotEssentials.git
-cd SpigotEssentials
+git clone https://github.com/frame-dev/PaperEssentials.git
+cd PaperEssentials
 
 # Build with Maven
 mvn clean package
 
-# Output: target/SpigotEssentials-1.0-SNAPSHOT.jar
+# Output: target/PaperEssentials-1.0-SNAPSHOT.jar
 ```
 
 ## Support
