@@ -5,10 +5,10 @@ import ch.framedev.spigotEssentials.listeners.PlayerListeners;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("DataFlowIssue")
-public final class SpigotEssentials extends JavaPlugin {
+public final class PaperEssentials extends JavaPlugin {
 
     // Singleton instance
-    private static SpigotEssentials instance;
+    private static PaperEssentials instance;
 
     @Override
     public void onEnable() {
@@ -20,7 +20,7 @@ public final class SpigotEssentials extends JavaPlugin {
         registerCommands();
         registerListeners();
 
-        getLogger().info("SpigotEssentials has been enabled.");
+        getLogger().info("PaperEssentials has been enabled.");
     }
 
     private void registerCommands() {
@@ -86,14 +86,14 @@ public final class SpigotEssentials extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("SpigotEssentials has been disabled.");
+        getLogger().info("PaperEssentials has been disabled.");
     }
 
     /**
      * Get the instance of the main class
-     * @return SpigotEssentials instance
+     * @return PaperEssentials instance
      */
-    public static SpigotEssentials getInstance() {
+    public static PaperEssentials getInstance() {
         return instance;
     }
 }

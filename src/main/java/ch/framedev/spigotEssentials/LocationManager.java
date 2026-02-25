@@ -11,7 +11,7 @@ import java.util.logging.Level;
 public class LocationManager {
 
     private final String locationName;
-    private final File file = new File(SpigotEssentials.getInstance().getDataFolder(), "locations.yml");
+    private final File file = new File(PaperEssentials.getInstance().getDataFolder(), "locations.yml");
     private final FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
     public LocationManager(String locationName) {
@@ -23,7 +23,7 @@ public class LocationManager {
         try {
             config.save(file);
         } catch (Exception e) {
-            SpigotEssentials.getInstance().getLogger().log(Level.SEVERE, "Could not save location to locations.yml", e);
+            PaperEssentials.getInstance().getLogger().log(Level.SEVERE, "Could not save location to locations.yml", e);
         }
     }
 
@@ -43,7 +43,7 @@ public class LocationManager {
         try {
             config.save(file);
         } catch (Exception e) {
-            SpigotEssentials.getInstance().getLogger().log(Level.SEVERE, "Could not delete location from locations.yml", e);
+            PaperEssentials.getInstance().getLogger().log(Level.SEVERE, "Could not delete location from locations.yml", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class LocationManager {
     private Location stringToLocation(String locationString) {
         String[] parts = locationString.split(";");
         Location location = new Location(
-                SpigotEssentials.getInstance().getServer().getWorld(parts[0]),
+                PaperEssentials.getInstance().getServer().getWorld(parts[0]),
                 Double.parseDouble(parts[1]),
                 Double.parseDouble(parts[2]),
                 Double.parseDouble(parts[3])

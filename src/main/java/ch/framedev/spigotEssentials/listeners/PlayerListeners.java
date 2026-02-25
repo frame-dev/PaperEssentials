@@ -1,6 +1,6 @@
 package ch.framedev.spigotEssentials.listeners;
 
-import ch.framedev.spigotEssentials.SpigotEssentials;
+import ch.framedev.spigotEssentials.PaperEssentials;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListeners implements Listener {
 
-    private final SpigotEssentials plugin;
+    private final PaperEssentials plugin;
 
-    public PlayerListeners(SpigotEssentials plugin) {
+    public PlayerListeners(PaperEssentials plugin) {
         this.plugin = plugin;
     }
 

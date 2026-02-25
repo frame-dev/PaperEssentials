@@ -1,6 +1,6 @@
 package ch.framedev.spigotEssentials.commands;
 
-import ch.framedev.spigotEssentials.SpigotEssentials;
+import ch.framedev.spigotEssentials.PaperEssentials;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,9 +20,9 @@ public class BackCommand implements CommandExecutor, Listener {
 
     private final Map<Player, Location> lastLocations = new HashMap<>();
 
-    private final SpigotEssentials plugin;
+    private final PaperEssentials plugin;
 
-    public BackCommand(SpigotEssentials plugin) {
+    public BackCommand(PaperEssentials plugin) {
         this.plugin = plugin;
     }
 

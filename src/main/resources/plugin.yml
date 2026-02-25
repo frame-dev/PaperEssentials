@@ -1,6 +1,6 @@
 name: SpigotEssentials
 version: '1.0-SNAPSHOT'
-main: ch.framedev.spigotEssentials.SpigotEssentials
+main: ch.framedev.spigotEssentials.PaperEssentials
 api-version: '1.21'
 
 commands:
