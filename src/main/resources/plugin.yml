@@ -1,0 +1,55 @@
+name: SpigotEssentials
+version: '1.0-SNAPSHOT'
+main: ch.framedev.spigotEssentials.SpigotEssentials
+api-version: '1.21'
+
+commands:
+  gamemode:
+    description: Change your game mode.
+    usage: /gamemode <mode> [player]
+    aliases: [gm]
+  fly:
+    description: Toggle fly mode.
+    usage: /fly [player]
+  heal:
+    description: Heal yourself or another player.
+    usage: /heal [player]
+  feed:
+    description: Feed yourself or another player.
+    usage: /feed [player]
+  sethome:
+    description: Set your home location.
+    usage: /sethome [name]
+  home:
+    description: Teleport to your home location.
+    usage: /home [name]
+  delhome:
+    description: Delete your home location.
+    usage: /delhome [name]
+  tpa:
+    description: Request to teleport to another player.
+    usage: /tpa <player>
+  tpaaccept:
+    description: Accept a teleport request.
+    usage: /tpaaccept
+  tpadeny:
+    description: Deny a teleport request.
+    usage: /tpadeny
+  tpahere:
+    description: Request another player to teleport to you.
+    usage: /tpahere <player>
+  tpahereaccept:
+    description: Accept a tpahere request.
+    usage: /tpahereaccept
+  tpaheredeny:
+    description: Deny a tpahere request.
+    usage: /tpaheredeny
+  setspawn:
+    description: Set the server spawn location.
+    usage: /setspawn
+  spawn:
+    description: Teleport to the server spawn location.
+    usage: /spawn
+  back:
+    description: Teleport back to your previous location.
+    usage: /back

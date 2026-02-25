@@ -1,0 +1,3 @@
+back-command: true
+join-message: "&aWelcome to the server, &6%player%!"
+leave-message: "&cGoodbye, &6%player%!"
