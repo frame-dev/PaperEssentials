@@ -109,13 +109,13 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 - Players respawn at spawn if no bed is set
 
 ### World Management
-| Command | Description | Usage | Aliases |
-|---------|-------------|-------|---------|
-| `/day` | Set world time to day | `/day [world]` | - |
-| `/night` | Set world time to night | `/night [world]` | - |
-| `/sun` | Set weather to clear | `/sun [world]` | `/clear` |
-| `/rain` | Set weather to rain | `/rain [world]` | - |
-| `/thunder` | Set weather to thunder | `/thunder [world]` | `/storm` |
+| Command | Description | Usage | Aliases         |
+|---------|-------------|-------|-----------------|
+| `/day` | Set world time to day | `/day [world]` | -               |
+| `/night` | Set world time to night | `/night [world]` | -               |
+| `/sun` | Set weather to clear | `/sun [world]` | `/clearweather`, `/sunny` |
+| `/rain` | Set weather to rain | `/rain [world]` | -               |
+| `/thunder` | Set weather to thunder | `/thunder [world]` | `/storm`        |
 
 ### Personal Environment
 | Command | Description | Usage | Aliases |
