@@ -1,3 +1,58 @@
-back-command: true
+# PaperEssentials Configuration File
+#
+# This is the main configuration file for PaperEssentials plugin
+#
+# Message color codes can be used with & symbol
+# Available colors: &0-&9, &a-&f
+# Formatting: &l (bold), &m (strikethrough), &n (underline), &o (italic), &k (magic)
+# Placeholders: %player% - player name
+
+# ===================================
+# Player Join/Leave Messages
+# ===================================
+# Send custom messages when players join or leave the server
+# Set to empty string ("") to disable
+
 join-message: "&aWelcome to the server, &6%player%!"
 leave-message: "&cGoodbye, &6%player%!"
+
+# ===================================
+# Back Command
+# ===================================
+# Enable or disable the /back command
+# When enabled, players can return to their previous location after death or teleport
+
+back-command: true
+
+# ===================================
+# Teleport Request Settings
+# ===================================
+# Teleport request timeout in seconds (how long before a TPA request expires)
+# Default: 60 seconds
+
+tpa-timeout: 60
+
+# ===================================
+# AFK Settings
+# ===================================
+# Enable automatic AFK detection
+# When enabled, players will be marked as AFK after being inactive for the specified time
+
+auto-afk-enabled: true
+
+# Time in seconds before a player is automatically marked as AFK
+# Default: 300 seconds (5 minutes)
+
+auto-afk-time: 300
+
+# ===================================
+# First Join Settings
+# ===================================
+# Broadcast a message when a player joins for the first time
+
+first-join-broadcast: true
+
+# Custom first join message (leave empty to use default)
+# Placeholders: %player% - player name
+
+first-join-message: "&a&lWelcome &e%player% &a&lto the server for the first time!"

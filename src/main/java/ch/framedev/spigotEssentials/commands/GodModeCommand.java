@@ -1,40 +1,38 @@
 package ch.framedev.spigotEssentials.commands;
 
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class GodModeCommand implements CommandExecutor {
+public class GodModeCommand extends AbstractCommand {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 0) {
-            if (!(sender instanceof Player player)) {
-                sender.sendMessage("Only players can toggle their own god mode.");
+            Player player = asPlayer(sender);
+            if (player == null) {
+                sendMessage(sender, MessageConfig.PLAYER_ONLY);
                 return true;
             }
-            if (!sender.hasPermission("spigotessentials.godmode.self")) {
-                sender.sendMessage("You do not have permission to toggle your own god mode.");
+            if (!checkPermission(sender, "spigotessentials.godmode.self", MessageConfig.NO_PERMISSION_SELF)) {
                 return true;
             }
             toggleGodMode(player, player);
             return true;
         } else if (args.length == 1) {
-            if (!sender.hasPermission("spigotessentials.godmode.others")) {
-                sender.sendMessage("You do not have permission to toggle god mode for others.");
+            if (!checkPermission(sender, "spigotessentials.godmode.others", MessageConfig.NO_PERMISSION_OTHERS)) {
                 return true;
             }
-            Player target = sender.getServer().getPlayerExact(args[0]);
+            Player target = getPlayer(sender, args[0]);
             if (target == null) {
-                sender.sendMessage("Player not found.");
                 return true;
             }
             toggleGodMode(sender, target);
             return true;
         } else {
-            sender.sendMessage("Usage: /god [player]");
+            sendMessage(sender, MessageConfig.INVALID_USAGE, "/god [player]");
             return false;
         }
     }
@@ -42,13 +40,12 @@ public class GodModeCommand implements CommandExecutor {
     private void toggleGodMode(CommandSender sender, Player target) {
         boolean newState = !target.isInvulnerable();
         target.setInvulnerable(newState);
-        String status = newState ? "enabled" : "disabled";
 
         if (sender.equals(target)) {
-            target.sendMessage("§aGod mode " + status + ".");
+            sendMessage(target, newState ? MessageConfig.GOD_ENABLED_SELF : MessageConfig.GOD_DISABLED_SELF);
         } else {
-            sender.sendMessage("§aGod mode for " + target.getName() + " has been " + status + ".");
-            target.sendMessage("§aYour god mode has been " + status + ".");
+            sendMessage(sender, newState ? MessageConfig.GOD_ENABLED_OTHER : MessageConfig.GOD_DISABLED_OTHER, target.getName());
+            sendMessage(target, newState ? MessageConfig.GOD_ENABLED_TARGET : MessageConfig.GOD_DISABLED_TARGET);
         }
     }
 }

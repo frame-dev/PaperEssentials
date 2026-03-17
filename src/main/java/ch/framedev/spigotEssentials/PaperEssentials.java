@@ -1,99 +1,74 @@
 package ch.framedev.spigotEssentials;
 
-import ch.framedev.spigotEssentials.commands.*;
 import ch.framedev.spigotEssentials.listeners.PlayerListeners;
+import ch.framedev.spigotEssentials.managers.CommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@SuppressWarnings("DataFlowIssue")
+/**
+ * Main plugin class for PaperEssentials
+ * A comprehensive essentials plugin for Paper/Spigot servers
+ */
 public final class PaperEssentials extends JavaPlugin {
 
-    // Singleton instance
     private static PaperEssentials instance;
+    private CommandManager commandManager;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
+        // Initialize configuration
+        initializeConfig();
 
-        registerCommands();
+        // Register managers
+        this.commandManager = new CommandManager(this);
+        commandManager.registerCommands();
+
+        // Register listeners
         registerListeners();
 
-        getLogger().info("PaperEssentials has been enabled.");
+        getLogger().info("PaperEssentials has been enabled successfully.");
     }
 
-    private void registerCommands() {
-        getLogger().info("Registering commands...");
-
-        // Simple commands
-        GameModeCommand gameModeCommand = new GameModeCommand();
-        registerCommand("gamemode", gameModeCommand, gameModeCommand);
-        registerCommand("fly", new FlyCommand());
-        registerCommand("heal", new HealCommand());
-        registerCommand("feed", new FeedCommand());
-
-        // Home commands
-        HomeCommand homeCommand = new HomeCommand();
-        registerCommand("sethome", homeCommand);
-        registerCommand("home", homeCommand);
-        registerCommand("delhome", homeCommand);
-
-        // Teleport commands
-        TeleportCommand teleportCommand = new TeleportCommand();
-        registerCommand("tpa", teleportCommand);
-        registerCommand("tpaaccept", teleportCommand);
-        registerCommand("tpadeny", teleportCommand);
-        registerCommand("tpahere", teleportCommand);
-        registerCommand("tpahereaccept", teleportCommand);
-        registerCommand("tpaheredeny", teleportCommand);
-        getServer().getPluginManager().registerEvents(teleportCommand, this);
-
-        // Spawn commands
-        SpawnCommand spawnCommand = new SpawnCommand();
-        registerCommand("setspawn", spawnCommand);
-        registerCommand("spawn", spawnCommand);
-        getServer().getPluginManager().registerEvents(spawnCommand, this);
-
-        // Back command
-        BackCommand backCommand = new BackCommand(this);
-        registerCommand("back", backCommand);
-        getServer().getPluginManager().registerEvents(backCommand, this);
-
-        getLogger().info("Commands registered.");
+    @Override
+    public void onDisable() {
+        getLogger().info("PaperEssentials has been disabled.");
+        instance = null;
     }
 
+    /**
+     * Initialize the plugin configuration
+     */
+    private void initializeConfig() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+    }
+
+    /**
+     * Register all event listeners
+     */
     private void registerListeners() {
         getLogger().info("Registering listeners...");
 
         PlayerListeners playerListeners = new PlayerListeners(this);
         getServer().getPluginManager().registerEvents(playerListeners, this);
 
-        getLogger().info("Listeners registered.");
-    }
-
-    private void registerCommand(String name, Object executor) {
-        registerCommand(name, executor, null);
-    }
-
-    private void registerCommand(String name, Object executor, Object tabCompleter) {
-        var cmd = getCommand(name);
-        cmd.setExecutor((org.bukkit.command.CommandExecutor) executor);
-        if (tabCompleter != null) {
-            cmd.setTabCompleter((org.bukkit.command.TabCompleter) tabCompleter);
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        getLogger().info("PaperEssentials has been disabled.");
+        getLogger().info("Listeners registered successfully.");
     }
 
     /**
-     * Get the instance of the main class
-     * @return PaperEssentials instance
+     * Get the plugin instance
+     * @return The plugin instance
      */
     public static PaperEssentials getInstance() {
         return instance;
+    }
+
+    /**
+     * Get the command manager
+     * @return The command manager
+     */
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 }

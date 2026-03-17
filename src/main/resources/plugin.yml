@@ -1,55 +1,410 @@
-name: SpigotEssentials
+name: PaperEssentials
 version: '1.0-SNAPSHOT'
 main: ch.framedev.spigotEssentials.PaperEssentials
 api-version: '1.21'
+author: FrameDev
+description: A comprehensive essentials plugin for Paper/Spigot servers
+website: https://github.com/framedev/PaperEssentials
 
 commands:
   gamemode:
     description: Change your game mode.
     usage: /gamemode <mode> [player]
     aliases: [gm]
+    permission: spigotessentials.gamemode.self
   fly:
     description: Toggle fly mode.
     usage: /fly [player]
+    permission: spigotessentials.fly.self
   heal:
     description: Heal yourself or another player.
     usage: /heal [player]
+    permission: spigotessentials.heal.self
   feed:
     description: Feed yourself or another player.
     usage: /feed [player]
+    permission: spigotessentials.feed.self
+  god:
+    description: Toggle god mode.
+    usage: /god [player]
+    aliases: [godmode]
+    permission: spigotessentials.godmode.self
   sethome:
     description: Set your home location.
     usage: /sethome [name]
+    permission: spigotessentials.home.set
   home:
     description: Teleport to your home location.
     usage: /home [name]
+    permission: spigotessentials.home.teleport
   delhome:
     description: Delete your home location.
     usage: /delhome [name]
+    permission: spigotessentials.home.delete
   tpa:
     description: Request to teleport to another player.
     usage: /tpa <player>
+    permission: spigotessentials.tpa
   tpaaccept:
     description: Accept a teleport request.
     usage: /tpaaccept
+    permission: spigotessentials.tpa
   tpadeny:
     description: Deny a teleport request.
     usage: /tpadeny
+    permission: spigotessentials.tpa
   tpahere:
     description: Request another player to teleport to you.
     usage: /tpahere <player>
+    permission: spigotessentials.tpahere
   tpahereaccept:
     description: Accept a tpahere request.
     usage: /tpahereaccept
+    permission: spigotessentials.tpahere
   tpaheredeny:
     description: Deny a tpahere request.
     usage: /tpaheredeny
+    permission: spigotessentials.tpahere
   setspawn:
     description: Set the server spawn location.
     usage: /setspawn
+    permission: spigotessentials.spawn.set
   spawn:
     description: Teleport to the server spawn location.
     usage: /spawn
+    permission: spigotessentials.spawn.teleport
   back:
     description: Teleport back to your previous location.
     usage: /back
+    permission: spigotessentials.back
+  clear:
+    description: Clear your or another player's inventory.
+    usage: /clear [player]
+    aliases: [ci]
+    permission: spigotessentials.clear.self
+  speed:
+    description: Adjust walk or fly speed.
+    usage: /speed <walk|fly> <0-10> [player]
+    permission: spigotessentials.speed
+  workbench:
+    description: Open a virtual crafting table.
+    usage: /workbench
+    aliases: [craft, wb]
+    permission: spigotessentials.workbench
+  enderchest:
+    description: Open your or another player's ender chest.
+    usage: /enderchest [player]
+    aliases: [ec, echest]
+    permission: spigotessentials.enderchest.self
+  suicide:
+    description: Commit suicide.
+    usage: /suicide
+    aliases: [kill]
+    permission: spigotessentials.suicide
+  ping:
+    description: Check your or another player's ping.
+    usage: /ping [player]
+    permission: spigotessentials.ping.self
+  hat:
+    description: Wear the item in your hand as a hat.
+    usage: /hat
+    permission: spigotessentials.hat
+  afk:
+    description: Toggle AFK status.
+    usage: /afk
+    permission: spigotessentials.afk
+  invsee:
+    description: View another player's inventory.
+    usage: /invsee <player>
+    aliases: [inv]
+    permission: spigotessentials.invsee
+  playerweather:
+    description: Set your personal weather.
+    usage: /playerweather <clear|rain|reset> [player]
+    aliases: [pweather, pw]
+    permission: spigotessentials.playerweather.self
+  playertime:
+    description: Set your personal time.
+    usage: /playertime <time|reset> [player]
+    aliases: [ptime, pt]
+    permission: spigotessentials.playertime.self
+  day:
+    description: Set world time to day.
+    usage: /day [world]
+    permission: spigotessentials.time
+  night:
+    description: Set world time to night.
+    usage: /night [world]
+    permission: spigotessentials.time
+  sun:
+    description: Set world weather to clear.
+    usage: /sun [world]
+    aliases: [clear]
+    permission: spigotessentials.weather
+  rain:
+    description: Set world weather to rain.
+    usage: /rain [world]
+    permission: spigotessentials.weather
+  thunder:
+    description: Set world weather to thunder.
+    usage: /thunder [world]
+    aliases: [storm]
+    permission: spigotessentials.weather
+
+permissions:
+  spigotessentials.*:
+    description: Grants all PaperEssentials permissions
+    default: op
+    children:
+      spigotessentials.gamemode.*: true
+      spigotessentials.fly.*: true
+      spigotessentials.heal.*: true
+      spigotessentials.feed.*: true
+      spigotessentials.godmode.*: true
+      spigotessentials.home.*: true
+      spigotessentials.tpa: true
+      spigotessentials.tpahere: true
+      spigotessentials.spawn.*: true
+      spigotessentials.back: true
+      spigotessentials.clear.*: true
+      spigotessentials.speed: true
+      spigotessentials.workbench: true
+      spigotessentials.enderchest.*: true
+      spigotessentials.suicide: true
+      spigotessentials.ping.*: true
+      spigotessentials.hat: true
+      spigotessentials.afk: true
+      spigotessentials.invsee: true
+      spigotessentials.playerweather.*: true
+      spigotessentials.playertime.*: true
+      spigotessentials.time: true
+      spigotessentials.weather: true
+
+  spigotessentials.gamemode.*:
+    description: Grants all gamemode permissions
+    default: op
+    children:
+      spigotessentials.gamemode.self: true
+      spigotessentials.gamemode.others: true
+
+  spigotessentials.gamemode.self:
+    description: Allows changing own game mode
+    default: op
+
+  spigotessentials.gamemode.others:
+    description: Allows changing others' game mode
+    default: op
+
+  spigotessentials.fly.*:
+    description: Grants all fly permissions
+    default: op
+    children:
+      spigotessentials.fly.self: true
+      spigotessentials.fly.others: true
+
+  spigotessentials.fly.self:
+    description: Allows toggling own fly mode
+    default: op
+
+  spigotessentials.fly.others:
+    description: Allows toggling others' fly mode
+    default: op
+
+  spigotessentials.heal.*:
+    description: Grants all heal permissions
+    default: op
+    children:
+      spigotessentials.heal.self: true
+      spigotessentials.heal.others: true
+
+  spigotessentials.heal.self:
+    description: Allows healing self
+    default: op
+
+  spigotessentials.heal.others:
+    description: Allows healing others
+    default: op
+
+  spigotessentials.feed.*:
+    description: Grants all feed permissions
+    default: op
+    children:
+      spigotessentials.feed.self: true
+      spigotessentials.feed.others: true
+
+  spigotessentials.feed.self:
+    description: Allows feeding self
+    default: op
+
+  spigotessentials.feed.others:
+    description: Allows feeding others
+    default: op
+
+  spigotessentials.godmode.*:
+    description: Grants all god mode permissions
+    default: op
+    children:
+      spigotessentials.godmode.self: true
+      spigotessentials.godmode.others: true
+
+  spigotessentials.godmode.self:
+    description: Allows toggling own god mode
+    default: op
+
+  spigotessentials.godmode.others:
+    description: Allows toggling others' god mode
+    default: op
+
+  spigotessentials.home.*:
+    description: Grants all home permissions
+    default: true
+    children:
+      spigotessentials.home.set: true
+      spigotessentials.home.teleport: true
+      spigotessentials.home.delete: true
+
+  spigotessentials.home.set:
+    description: Allows setting home locations
+    default: true
+
+  spigotessentials.home.teleport:
+    description: Allows teleporting to home locations
+    default: true
+
+  spigotessentials.home.delete:
+    description: Allows deleting home locations
+    default: true
+
+  spigotessentials.tpa:
+    description: Allows using TPA commands
+    default: true
+
+  spigotessentials.tpahere:
+    description: Allows using TPAHere commands
+    default: true
+
+  spigotessentials.spawn.*:
+    description: Grants all spawn permissions
+    default: true
+    children:
+      spigotessentials.spawn.set: true
+      spigotessentials.spawn.teleport: true
+
+  spigotessentials.spawn.set:
+    description: Allows setting spawn location
+    default: op
+
+  spigotessentials.spawn.teleport:
+    description: Allows teleporting to spawn
+    default: true
+
+  spigotessentials.back:
+    description: Allows teleporting back to previous location
+    default: true
+
+  spigotessentials.clear.*:
+    description: Grants all clear permissions
+    default: op
+    children:
+      spigotessentials.clear.self: true
+      spigotessentials.clear.others: true
+
+  spigotessentials.clear.self:
+    description: Allows clearing own inventory
+    default: op
+
+  spigotessentials.clear.others:
+    description: Allows clearing others' inventory
+    default: op
+
+  spigotessentials.speed:
+    description: Allows adjusting movement speed
+    default: op
+
+  spigotessentials.workbench:
+    description: Allows opening virtual crafting table
+    default: true
+
+  spigotessentials.enderchest.*:
+    description: Grants all enderchest permissions
+    default: true
+    children:
+      spigotessentials.enderchest.self: true
+      spigotessentials.enderchest.others: true
+
+  spigotessentials.enderchest.self:
+    description: Allows opening own ender chest
+    default: true
+
+  spigotessentials.enderchest.others:
+    description: Allows opening others' ender chests
+    default: op
+
+  spigotessentials.suicide:
+    description: Allows using suicide command
+    default: true
+
+  spigotessentials.ping.*:
+    description: Grants all ping permissions
+    default: true
+    children:
+      spigotessentials.ping.self: true
+      spigotessentials.ping.others: true
+
+  spigotessentials.ping.self:
+    description: Allows checking own ping
+    default: true
+
+  spigotessentials.ping.others:
+    description: Allows checking others' ping
+    default: true
+
+  spigotessentials.hat:
+    description: Allows wearing items as hat
+    default: true
+
+  spigotessentials.afk:
+    description: Allows using AFK command
+    default: true
+
+  spigotessentials.invsee:
+    description: Allows viewing other players' inventories
+    default: op
+
+  spigotessentials.playerweather.*:
+    description: Grants all playerweather permissions
+    default: true
+    children:
+      spigotessentials.playerweather.self: true
+      spigotessentials.playerweather.others: true
+
+  spigotessentials.playerweather.self:
+    description: Allows setting own personal weather
+    default: true
+
+  spigotessentials.playerweather.others:
+    description: Allows setting others' personal weather
+    default: op
+
+  spigotessentials.playertime.*:
+    description: Grants all playertime permissions
+    default: true
+    children:
+      spigotessentials.playertime.self: true
+      spigotessentials.playertime.others: true
+
+  spigotessentials.playertime.self:
+    description: Allows setting own personal time
+    default: true
+
+  spigotessentials.playertime.others:
+    description: Allows setting others' personal time
+    default: op
+
+  spigotessentials.time:
+    description: Allows changing world time
+    default: op
+
+  spigotessentials.weather:
+    description: Allows changing world weather
+    default: op

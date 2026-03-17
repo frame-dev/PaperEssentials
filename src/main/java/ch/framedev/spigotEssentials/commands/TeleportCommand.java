@@ -1,7 +1,7 @@
 package ch.framedev.spigotEssentials.commands;
 
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("SameReturnValue")
-public class TeleportCommand implements CommandExecutor, Listener {
+/**
+ * Command handler for teleport request commands (TPA/TPAHere)
+ */
+public class TeleportCommand extends AbstractCommand implements Listener {
 
-    // Store teleport requests with timestamps for expiration
     private final Map<Player, TeleportRequest> tpaTeleportRequests = new HashMap<>();
     private final Map<Player, TeleportRequest> tpaHereTeleportRequests = new HashMap<>();
 
@@ -36,9 +37,10 @@ public class TeleportCommand implements CommandExecutor, Listener {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("§cOnly players can use this command.");
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+        Player player = asPlayer(sender);
+        if (player == null) {
+            sendMessage(sender, MessageConfig.PLAYER_ONLY);
             return true;
         }
 
@@ -47,10 +49,10 @@ public class TeleportCommand implements CommandExecutor, Listener {
             case "tpa" -> handleTeleportRequest(player, args, tpaTeleportRequests, "tpa", "/tpaaccept", "/tpadeny");
             case "tpahere" ->
                     handleTeleportRequest(player, args, tpaHereTeleportRequests, "tpahere", "/tpahereaccept", "/tpaheredeny");
-            case "tpaaccept" -> handleAcceptRequest(player, tpaTeleportRequests, true, "teleport");
-            case "tpahereaccept" -> handleAcceptRequest(player, tpaHereTeleportRequests, false, "teleport here");
-            case "tpadeny" -> handleDenyRequest(player, tpaTeleportRequests, "teleport");
-            case "tpaheredeny" -> handleDenyRequest(player, tpaHereTeleportRequests, "teleport here");
+            case "tpaaccept" -> handleAcceptRequest(player, tpaTeleportRequests, true);
+            case "tpahereaccept" -> handleAcceptRequest(player, tpaHereTeleportRequests, false);
+            case "tpadeny" -> handleDenyRequest(player, tpaTeleportRequests);
+            case "tpaheredeny" -> handleDenyRequest(player, tpaHereTeleportRequests);
             default -> false;
         };
     }
@@ -58,73 +60,75 @@ public class TeleportCommand implements CommandExecutor, Listener {
     private boolean handleTeleportRequest(Player player, String[] args, Map<Player, TeleportRequest> requests,
                                           String cmdType, String acceptCmd, String denyCmd) {
         if (args.length != 1) {
-            player.sendMessage("§cUsage: §a/" + cmdType + " <player>");
+            sendMessage(player, MessageConfig.INVALID_USAGE, "/" + cmdType + " <player>");
             return true;
         }
 
-        Player target = player.getServer().getPlayerExact(args[0]);
+        Player target = getPlayer(player, args[0]);
         if (target == null) {
-            player.sendMessage("§cPlayer not found.");
             return true;
         }
         if (target.equals(player)) {
-            player.sendMessage("§cYou cannot teleport to yourself.");
+            sendMessage(player, MessageConfig.TPA_CANNOT_SELF);
             return true;
         }
 
         requests.put(player, new TeleportRequest(target));
-        player.sendMessage("Teleport request sent to " + target.getName() + ".");
-        target.sendMessage(player.getName() + " has requested to teleport " +
-                          (cmdType.equals("tpa") ? "to you" : "you to them") +
-                          ". Type " + acceptCmd + " to accept or " + denyCmd + " to deny.");
+        sendMessage(player, MessageConfig.TPA_SENT, target.getName());
+
+        if (cmdType.equals("tpa")) {
+            sendMessage(target, MessageConfig.TPA_RECEIVED, player.getName(), acceptCmd, denyCmd);
+        } else {
+            sendMessage(target, MessageConfig.TPAHERE_RECEIVED, player.getName(), acceptCmd, denyCmd);
+        }
         return true;
     }
 
     private boolean handleAcceptRequest(Player player, Map<Player, TeleportRequest> requests,
-                                       boolean requesterToPlayer, String requestType) {
+                                       boolean requesterToPlayer) {
         Player requester = findRequester(player, requests);
         if (requester == null) {
-            player.sendMessage("§cNo " + requestType + " requests found.");
+            sendMessage(player, MessageConfig.TPA_NO_REQUEST);
             return true;
         }
 
         TeleportRequest request = requests.get(requester);
         if (request.isExpired()) {
             requests.remove(requester);
-            player.sendMessage("§c" + capitalizeFirst(requestType) + " request has expired.");
+            sendMessage(player, MessageConfig.TPA_EXPIRED);
             return true;
         }
 
         if (!requester.isOnline()) {
             requests.remove(requester);
-            player.sendMessage("§cPlayer is no longer online.");
+            sendMessage(player, MessageConfig.TPA_PLAYER_OFFLINE);
             return true;
         }
 
         if (requesterToPlayer) {
             requester.teleport(player);
-            requester.sendMessage("§aYou have been teleported to " + player.getName() + ".");
+            sendMessage(requester, MessageConfig.TPA_ACCEPTED_SENDER, player.getName());
         } else {
             player.teleport(requester);
-            requester.sendMessage("§a" + player.getName() + " has teleported to you.");
+            sendMessage(requester, MessageConfig.TPAHERE_ACCEPTED_SENDER, player.getName());
         }
 
-        player.sendMessage("§a" + capitalizeFirst(requestType) + " request accepted.");
+        sendMessage(player, MessageConfig.TPA_ACCEPTED_TARGET);
         requests.remove(requester);
         return true;
     }
 
-    private boolean handleDenyRequest(Player player, Map<Player, TeleportRequest> requests, String requestType) {
+    private boolean handleDenyRequest(Player player, Map<Player, TeleportRequest> requests) {
         Player requester = findRequester(player, requests);
         if (requester == null) {
-            player.sendMessage("§cNo " + requestType + " requests found.");
+            sendMessage(player, MessageConfig.TPA_NO_REQUEST);
             return true;
         }
 
         requests.remove(requester);
-        player.sendMessage("§c" + capitalizeFirst(requestType) + " request from " + requester.getName() + " denied.");
+        sendMessage(player, MessageConfig.TPA_DENIED_TARGET, requester.getName());
         if (requester.isOnline()) {
-            requester.sendMessage("§cYour " + requestType + " request to " + player.getName() + " was denied.");
+            sendMessage(requester, MessageConfig.TPA_DENIED_SENDER, player.getName());
         }
         return true;
     }
@@ -135,10 +139,6 @@ public class TeleportCommand implements CommandExecutor, Listener {
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(null);
-    }
-
-    private String capitalizeFirst(String str) {
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     @EventHandler

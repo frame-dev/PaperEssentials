@@ -1,59 +1,56 @@
 package ch.framedev.spigotEssentials.commands;
 
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class HealCommand implements CommandExecutor {
+public class HealCommand extends AbstractCommand {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 0) {
-            if (!(sender instanceof Player player)) {
-                sender.sendMessage("This command can only be used by players.");
+            Player player = asPlayer(sender);
+            if (player == null) {
+                sendMessage(sender, MessageConfig.PLAYER_ONLY);
                 return true;
             }
-            if (!sender.hasPermission("spigotessentials.heal.self")) {
-                sender.sendMessage("You do not have permission to heal yourself.");
+            if (!checkPermission(sender, "spigotessentials.heal.self", MessageConfig.NO_PERMISSION_SELF)) {
                 return true;
             }
             return healPlayer(player, player);
         } else if (args.length == 1) {
-            if (!sender.hasPermission("spigotessentials.heal.others")) {
-                sender.sendMessage("You do not have permission to heal others.");
+            if (!checkPermission(sender, "spigotessentials.heal.others", MessageConfig.NO_PERMISSION_OTHERS)) {
                 return true;
             }
-            Player target = sender.getServer().getPlayerExact(args[0]);
+            Player target = getPlayer(sender, args[0]);
             if (target == null) {
-                sender.sendMessage("Player not found.");
                 return true;
             }
             return healPlayer(sender, target);
         } else {
-            sender.sendMessage("Usage: /heal [player]");
+            sendMessage(sender, MessageConfig.INVALID_USAGE, "/heal [player]");
             return false;
         }
     }
 
     private boolean healPlayer(CommandSender sender, Player target) {
-        @Nullable AttributeInstance maxHealth = target.getAttribute(Attribute.MAX_HEALTH);
+        AttributeInstance maxHealth = target.getAttribute(Attribute.MAX_HEALTH);
         if (maxHealth == null) {
-            sender.sendMessage("Could not retrieve max health attribute.");
+            sendMessage(sender, "§cCould not retrieve max health attribute.");
             return true;
         }
 
         target.setHealth(maxHealth.getBaseValue());
 
         if (sender.equals(target)) {
-            target.sendMessage("§aYou have been healed.");
+            sendMessage(target, MessageConfig.HEAL_SELF);
         } else {
-            sender.sendMessage("§aHealed " + target.getName() + ".");
-            target.sendMessage("§aYou have been healed.");
+            sendMessage(sender, MessageConfig.HEAL_OTHER, target.getName());
+            sendMessage(target, MessageConfig.HEAL_TARGET, sender.getName());
         }
         return true;
     }

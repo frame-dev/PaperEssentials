@@ -1,40 +1,38 @@
 package ch.framedev.spigotEssentials.commands;
 
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class FlyCommand implements CommandExecutor {
+public class FlyCommand extends AbstractCommand {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 0) {
-            if (!(sender instanceof Player player)) {
-                sender.sendMessage("This command can only be used by players.");
+            Player player = asPlayer(sender);
+            if (player == null) {
+                sendMessage(sender, MessageConfig.PLAYER_ONLY);
                 return true;
             }
-            if (!sender.hasPermission("spigotessentials.fly.self")) {
-                sender.sendMessage("You do not have permission to toggle your own fly mode.");
+            if (!checkPermission(sender, "spigotessentials.fly.self", MessageConfig.NO_PERMISSION_SELF)) {
                 return true;
             }
             toggleFly(player, player);
             return true;
         } else if (args.length == 1) {
-            if (!sender.hasPermission("spigotessentials.fly.others")) {
-                sender.sendMessage("You do not have permission to toggle others' fly mode.");
+            if (!checkPermission(sender, "spigotessentials.fly.others", MessageConfig.NO_PERMISSION_OTHERS)) {
                 return true;
             }
-            Player target = sender.getServer().getPlayerExact(args[0]);
+            Player target = getPlayer(sender, args[0]);
             if (target == null) {
-                sender.sendMessage("Player not found.");
                 return true;
             }
             toggleFly(sender, target);
             return true;
         } else {
-            sender.sendMessage("Usage: /fly [player]");
+            sendMessage(sender, MessageConfig.INVALID_USAGE, "/fly [player]");
             return false;
         }
     }
@@ -42,13 +40,12 @@ public class FlyCommand implements CommandExecutor {
     private void toggleFly(CommandSender sender, Player target) {
         boolean newState = !target.getAllowFlight();
         target.setAllowFlight(newState);
-        String status = newState ? "enabled" : "disabled";
 
         if (sender.equals(target)) {
-            target.sendMessage("§aYour fly mode has been " + status + ".");
+            sendMessage(target, newState ? MessageConfig.FLY_ENABLED_SELF : MessageConfig.FLY_DISABLED_SELF);
         } else {
-            sender.sendMessage("§a" + target.getName() + "'s fly mode has been " + status + ".");
-            target.sendMessage("§aYour fly mode has been " + status + ".");
+            sendMessage(sender, newState ? MessageConfig.FLY_ENABLED_OTHER : MessageConfig.FLY_DISABLED_OTHER, target.getName());
+            sendMessage(target, newState ? MessageConfig.FLY_ENABLED_TARGET : MessageConfig.FLY_DISABLED_TARGET);
         }
     }
 }

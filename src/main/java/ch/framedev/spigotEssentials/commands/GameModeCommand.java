@@ -1,8 +1,8 @@
 package ch.framedev.spigotEssentials.commands;
 
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
@@ -12,37 +12,41 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class GameModeCommand implements CommandExecutor, TabCompleter {
+/**
+ * Command handler for game mode commands
+ */
+public class GameModeCommand extends AbstractCommand implements TabCompleter {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 1) {
-            if (!(sender instanceof Player player)) {
-                sender.sendMessage("This command can only be used by players.");
+            Player player = asPlayer(sender);
+            if (player == null) {
+                sendMessage(sender, MessageConfig.PLAYER_ONLY);
                 return true;
             }
-            if (!sender.hasPermission("spigotessentials.gamemode.self")) {
-                sender.sendMessage("You do not have permission to change your own game mode.");
+            if (!checkPermission(sender, "spigotessentials.gamemode.self", MessageConfig.NO_PERMISSION_SELF)) {
                 return true;
             }
             return setGameMode(player, args[0], player);
         } else if (args.length == 2) {
-            if (!sender.hasPermission("spigotessentials.gamemode.others")) {
-                sender.sendMessage("You do not have permission to change others' game modes.");
+            if (!checkPermission(sender, "spigotessentials.gamemode.others", MessageConfig.NO_PERMISSION_OTHERS)) {
                 return true;
             }
-            Player target = sender.getServer().getPlayerExact(args[1]);
+            Player target = getPlayer(sender, args[1]);
             if (target == null) {
-                sender.sendMessage("Player not found.");
                 return true;
             }
             boolean result = setGameMode(sender, args[0], target);
             if (result && target != sender) {
-                target.sendMessage("§aYour game mode has been changed to " + parseGameMode(args[0]).name() + ".");
+                GameMode mode = parseGameMode(args[0]);
+                if (mode != null) {
+                    sendMessage(target, MessageConfig.GAMEMODE_CHANGED_TARGET, mode.name());
+                }
             }
             return result;
         } else {
-            sender.sendMessage("Usage: /gamemode <mode> [player]");
+            sendMessage(sender, MessageConfig.INVALID_USAGE, "/gamemode <mode> [player]");
             return false;
         }
     }
@@ -50,15 +54,15 @@ public class GameModeCommand implements CommandExecutor, TabCompleter {
     private boolean setGameMode(CommandSender sender, String modeArg, Player target) {
         GameMode mode = parseGameMode(modeArg);
         if (mode == null) {
-            sender.sendMessage("Invalid game mode. Use survival, creative, adventure, or spectator.");
+            sendMessage(sender, MessageConfig.GAMEMODE_INVALID);
             return false;
         }
 
         target.setGameMode(mode);
         if (sender.equals(target)) {
-            sender.sendMessage("§aYour game mode has been changed to " + mode.name() + ".");
+            sendMessage(sender, MessageConfig.GAMEMODE_CHANGED_SELF, mode.name());
         } else {
-            sender.sendMessage("§a" + target.getName() + "'s game mode has been changed to " + mode.name() + ".");
+            sendMessage(sender, MessageConfig.GAMEMODE_CHANGED_OTHER, target.getName(), mode.name());
         }
         return true;
     }

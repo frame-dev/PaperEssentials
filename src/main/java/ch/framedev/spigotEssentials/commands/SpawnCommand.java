@@ -1,8 +1,9 @@
 package ch.framedev.spigotEssentials.commands;
 
 import ch.framedev.spigotEssentials.LocationManager;
+import ch.framedev.spigotEssentials.utils.MessageConfig;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,16 +12,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("SameReturnValue")
-public class SpawnCommand implements CommandExecutor, Listener {
+/**
+ * Command handler for spawn-related commands
+ */
+public class SpawnCommand extends AbstractCommand implements Listener {
 
     private static final String SPAWN_KEY = "spawn";
     private final LocationManager locationManager = new LocationManager(SPAWN_KEY);
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("Only players can use this command.");
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+        Player player = asPlayer(sender);
+        if (player == null) {
+            sendMessage(sender, MessageConfig.PLAYER_ONLY);
             return true;
         }
 
@@ -33,43 +37,58 @@ public class SpawnCommand implements CommandExecutor, Listener {
     }
 
     private boolean handleSetSpawn(Player player) {
-        if (!player.hasPermission("spigotessentials.setspawn")) {
-            player.sendMessage("You do not have permission to use this command.");
+        if (!checkPermission(player, "spigotessentials.spawn.set", MessageConfig.NO_PERMISSION_SELF)) {
             return true;
         }
 
-        locationManager.saveLocation(player.getLocation());
-        player.sendMessage("Spawn point set!");
+        if (locationManager.saveLocation(player.getLocation())) {
+            sendMessage(player, MessageConfig.SPAWN_SET);
+        } else {
+            sendMessage(player, "§cFailed to save spawn location.");
+        }
         return true;
     }
 
     private boolean handleSpawn(Player player) {
-        if (locationManager.locationExists()) {
-            player.teleport(locationManager.getLocation());
-            player.sendMessage("Teleported to spawn point!");
-        } else {
-            player.sendMessage("Spawn point is not set.");
+        if (!locationManager.hasLocation()) {
+            sendMessage(player, MessageConfig.SPAWN_NOT_SET);
+            return true;
         }
+
+        Location spawnLocation = locationManager.getLocation();
+        if (spawnLocation == null) {
+            sendMessage(player, MessageConfig.SPAWN_NOT_SET);
+            return true;
+        }
+
+        player.teleport(spawnLocation);
+        sendMessage(player, MessageConfig.SPAWN_TELEPORTED);
         return true;
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (!locationManager.locationExists()) return;
+        if (!locationManager.hasLocation()) return;
+
+        Location spawnLocation = locationManager.getLocation();
+        if (spawnLocation == null) return;
 
         Player player = event.getPlayer();
         if (player.getRespawnLocation() == null) {
-            event.setRespawnLocation(locationManager.getLocation());
-            player.sendMessage("Teleported to spawn point on respawn!");
+            event.setRespawnLocation(spawnLocation);
+            sendMessage(player, MessageConfig.SPAWN_TELEPORTED_RESPAWN);
         }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (player.hasPlayedBefore() || !locationManager.locationExists()) return;
+        if (player.hasPlayedBefore() || !locationManager.hasLocation()) return;
 
-        player.teleport(locationManager.getLocation());
-        player.sendMessage("Teleported to spawn point on join!");
+        Location spawnLocation = locationManager.getLocation();
+        if (spawnLocation == null) return;
+
+        player.teleport(spawnLocation);
+        sendMessage(player, MessageConfig.SPAWN_TELEPORTED_JOIN);
     }
 }

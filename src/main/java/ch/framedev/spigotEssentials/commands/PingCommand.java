@@ -6,7 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class FeedCommand extends AbstractCommand {
+/**
+ * Command to check player latency/ping
+ */
+public class PingCommand extends AbstractCommand {
 
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
@@ -16,36 +19,26 @@ public class FeedCommand extends AbstractCommand {
                 sendMessage(sender, MessageConfig.PLAYER_ONLY);
                 return true;
             }
-            if (!checkPermission(sender, "spigotessentials.feed.self", MessageConfig.NO_PERMISSION_SELF)) {
+            if (!checkPermission(sender, "spigotessentials.ping.self", MessageConfig.NO_PERMISSION_SELF)) {
                 return true;
             }
-            feedPlayer(player, player);
+            int ping = player.getPing();
+            sendMessage(player, MessageConfig.PING_SELF, String.valueOf(ping));
             return true;
         } else if (args.length == 1) {
-            if (!checkPermission(sender, "spigotessentials.feed.others", MessageConfig.NO_PERMISSION_OTHERS)) {
+            if (!checkPermission(sender, "spigotessentials.ping.others", MessageConfig.NO_PERMISSION_OTHERS)) {
                 return true;
             }
             Player target = getPlayer(sender, args[0]);
             if (target == null) {
                 return true;
             }
-            feedPlayer(sender, target);
+            int ping = target.getPing();
+            sendMessage(sender, MessageConfig.PING_OTHER, target.getName(), String.valueOf(ping));
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/feed [player]");
+            sendMessage(sender, MessageConfig.INVALID_USAGE, "/ping [player]");
             return false;
-        }
-    }
-
-    private void feedPlayer(CommandSender sender, Player target) {
-        target.setFoodLevel(20);
-        target.setSaturation(20);
-
-        if (sender.equals(target)) {
-            sendMessage(target, MessageConfig.FEED_SELF);
-        } else {
-            sendMessage(sender, MessageConfig.FEED_OTHER, target.getName());
-            sendMessage(target, MessageConfig.FEED_TARGET, sender.getName());
         }
     }
 }

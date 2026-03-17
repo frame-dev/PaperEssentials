@@ -1,9 +1,9 @@
 package ch.framedev.spigotEssentials.commands;
 
 import ch.framedev.spigotEssentials.PaperEssentials;
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,10 +16,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BackCommand implements CommandExecutor, Listener {
+/**
+ * Command handler for the back command
+ * Allows players to teleport to their previous location
+ */
+public class BackCommand extends AbstractCommand implements Listener {
 
     private final Map<Player, Location> lastLocations = new HashMap<>();
-
     private final PaperEssentials plugin;
 
     public BackCommand(PaperEssentials plugin) {
@@ -27,48 +30,63 @@ public class BackCommand implements CommandExecutor, Listener {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
-        if (!plugin.getConfig().getBoolean("back-command")) {
-            sender.sendMessage("The back command is disabled in the config.");
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+        if (!plugin.getConfig().getBoolean("back-command", true)) {
+            sendMessage(sender, MessageConfig.BACK_DISABLED);
             return true;
         }
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("Only players can use this command.");
+
+        Player player = asPlayer(sender);
+        if (player == null) {
+            sendMessage(sender, MessageConfig.PLAYER_ONLY);
             return true;
         }
-        if (!sender.hasPermission("spigotessentials.back")) {
-            sender.sendMessage("You do not have permission to use this command.");
+
+        if (!checkPermission(sender, "spigotessentials.back", MessageConfig.NO_PERMISSION_SELF)) {
             return true;
         }
-        if (command.getName().equalsIgnoreCase("back")) {
-            if (lastLocations.containsKey(player)) {
-                player.teleport(lastLocations.get(player));
+
+        if (lastLocations.containsKey(player)) {
+            Location lastLocation = lastLocations.get(player);
+            if (lastLocation != null && lastLocation.getWorld() != null) {
+                player.teleport(lastLocation);
                 lastLocations.remove(player);
-                player.sendMessage("Teleported back to your last location!");
+                sendMessage(player, MessageConfig.BACK_TELEPORTED);
             } else {
-                player.sendMessage("No previous location found.");
+                lastLocations.remove(player);
+                sendMessage(player, MessageConfig.BACK_NO_LOCATION);
             }
-            return true;
+        } else {
+            sendMessage(player, MessageConfig.BACK_NO_LOCATION);
         }
-        return false;
+        return true;
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        if (!plugin.getConfig().getBoolean("back-command")) return;
+        if (!plugin.getConfig().getBoolean("back-command", true)) return;
+
         Player player = event.getEntity();
         if (!player.hasPermission("spigotessentials.back")) return;
-        lastLocations.put(player, player.getLocation());
-        player.sendMessage("Use /back to return to your last location.");
+
+        Location deathLocation = player.getLocation();
+        if (deathLocation != null && deathLocation.getWorld() != null) {
+            lastLocations.put(player, deathLocation);
+            sendMessage(player, MessageConfig.BACK_USE_COMMAND);
+        }
     }
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (!plugin.getConfig().getBoolean("back-command")) return;
+        if (!plugin.getConfig().getBoolean("back-command", true)) return;
+
         Player player = event.getPlayer();
         if (!player.hasPermission("spigotessentials.back")) return;
-        // Store the location before teleport
-        lastLocations.put(player, event.getFrom());
+
+        Location fromLocation = event.getFrom();
+        if (fromLocation != null && fromLocation.getWorld() != null) {
+            lastLocations.put(player, fromLocation);
+        }
     }
 
     @EventHandler
