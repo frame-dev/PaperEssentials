@@ -2,6 +2,7 @@ package ch.framedev.spigotEssentials;
 
 import ch.framedev.spigotEssentials.listeners.PlayerListeners;
 import ch.framedev.spigotEssentials.managers.CommandManager;
+import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -19,6 +20,9 @@ public final class PaperEssentials extends JavaPlugin {
 
         // Initialize configuration
         initializeConfig();
+
+        // Load messages from messages.yml
+        MessageConfig.load();
 
         // Register managers
         this.commandManager = new CommandManager(this);

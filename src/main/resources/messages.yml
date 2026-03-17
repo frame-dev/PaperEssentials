@@ -1,0 +1,183 @@
+# PaperEssentials Messages Configuration
+# Use '&' for color codes (e.g., &a = green, &c = red, &6 = gold)
+# Use %s for placeholders in messages
+
+# Permission messages
+no-permission-self: "&cYou do not have permission to use this command."
+no-permission-others: "&cYou do not have permission to use this command on others."
+player-only: "&cThis command can only be used by players."
+player-not-found: "&cPlayer not found."
+
+# Command messages
+invalid-usage: "&cInvalid usage. Use: %s"
+
+# GameMode messages
+gamemode-changed-self: "&aYour game mode has been changed to %s."
+gamemode-changed-other: "&a%s's game mode has been changed to %s."
+gamemode-changed-target: "&aYour game mode has been changed to %s."
+gamemode-invalid: "&cInvalid game mode. Use survival, creative, adventure, or spectator."
+
+# Fly messages
+fly-enabled-self: "&aFly mode enabled."
+fly-disabled-self: "&cFly mode disabled."
+fly-enabled-other: "&aFly mode enabled for %s."
+fly-disabled-other: "&cFly mode disabled for %s."
+fly-enabled-target: "&aYour fly mode has been enabled."
+fly-disabled-target: "&cYour fly mode has been disabled."
+
+# Heal messages
+heal-self: "&aYou have been healed."
+heal-other: "&aYou have healed %s."
+heal-target: "&aYou have been healed by %s."
+
+# Feed messages
+feed-self: "&aYou have been fed."
+feed-other: "&aYou have fed %s."
+feed-target: "&aYou have been fed by %s."
+
+# God mode messages
+god-enabled-self: "&aGod mode enabled."
+god-disabled-self: "&cGod mode disabled."
+god-enabled-other: "&aGod mode enabled for %s."
+god-disabled-other: "&cGod mode disabled for %s."
+god-enabled-target: "&aYour god mode has been enabled."
+god-disabled-target: "&cYour god mode has been disabled."
+
+# Home messages
+home-set: "&aHome set successfully."
+home-set-named: "&aHome '%s' set successfully."
+home-not-set: "&cHome not set. Use /sethome to set your home location."
+home-not-set-named: "&cHome '%s' not set. Use /sethome %s to set your home location."
+home-teleported: "&aTeleported to home."
+home-teleported-named: "&aTeleported to home '%s'."
+home-deleted: "&aHome deleted successfully."
+home-deleted-named: "&aHome '%s' deleted successfully."
+
+# Spawn messages
+spawn-set: "&aSpawn point set!"
+spawn-teleported: "&aTeleported to spawn point!"
+spawn-not-set: "&cSpawn point is not set."
+spawn-teleported-respawn: "&aTeleported to spawn point on respawn!"
+spawn-teleported-join: "&aTeleported to spawn point on join!"
+
+# Back messages
+back-teleported: "&aTeleported back to your last location!"
+back-no-location: "&cNo previous location found."
+back-disabled: "&cThe back command is disabled in the config."
+back-use-command: "&aUse /back to return to your last location."
+
+# Teleport request messages
+tpa-sent: "&aTeleport request sent to %s."
+tpa-received: "&a%s has requested to teleport to you. Type %s to accept or %s to deny."
+tpahere-received: "&a%s has requested to teleport you to them. Type %s to accept or %s to deny."
+tpa-no-request: "&cNo teleport requests found."
+tpa-expired: "&cTeleport request has expired."
+tpa-player-offline: "&cPlayer is no longer online."
+tpa-accepted-sender: "&aYou have been teleported to %s."
+tpa-accepted-target: "&aTeleport request accepted."
+tpahere-accepted-sender: "&a%s has teleported to you."
+tpa-denied-sender: "&cYour teleport request to %s was denied."
+tpa-denied-target: "&cTeleport request from %s denied."
+tpa-cannot-self: "&cYou cannot teleport to yourself."
+
+# Clear command messages
+clear-self: "&aYour inventory has been cleared."
+clear-other: "&aCleared %s's inventory."
+clear-target: "&aYour inventory has been cleared by %s."
+
+# Speed command messages
+speed-set: "&aYour %s speed has been set to %s."
+speed-set-other: "&aSet %s's %s speed to %s."
+speed-invalid: "&cSpeed must be a number between 0 and 10."
+
+# Workbench messages
+workbench-opened: "&aOpened crafting table."
+
+# Enderchest messages
+enderchest-opened: "&aOpened ender chest."
+enderchest-opened-other: "&aOpened %s's ender chest."
+
+# Invsee messages
+invsee-opened: "&aOpened %s's inventory."
+
+# Suicide command messages
+suicide-success: "&cYou have committed suicide."
+
+# Ping command messages
+ping-self: "&aYour ping: %sms"
+ping-other: "&a%s's ping: %sms"
+
+# Hat command messages
+hat-set: "&aYou are now wearing %s as a hat!"
+hat-nothing: "&cYou must be holding an item to wear it as a hat."
+hat-air: "&cYou cannot wear air as a hat."
+
+# AFK messages
+afk-enabled: "&7You are now AFK."
+afk-disabled: "&7You are no longer AFK."
+afk-broadcast-enabled: "&7%s is now AFK."
+afk-broadcast-disabled: "&7%s is no longer AFK."
+afk-auto: "&7%s is now AFK (Auto)."
+
+# First join messages
+first-join-broadcast: "&aWelcome %s to the server for the first time!"
+
+# Player weather messages
+pweather-set: "&aYour personal weather has been set to %s."
+pweather-set-other: "&aSet %s's personal weather to %s."
+pweather-reset: "&aYour personal weather has been reset."
+pweather-reset-other: "&aReset %s's personal weather."
+pweather-invalid: "&cInvalid weather type. Use: clear, rain, or reset."
+
+# Player time messages
+ptime-set: "&aYour personal time has been set to %s."
+ptime-set-other: "&aSet %s's personal time to %s."
+ptime-reset: "&aYour personal time has been reset."
+ptime-reset-other: "&aReset %s's personal time."
+ptime-invalid: "&cInvalid time. Use: day, night, noon, midnight, or a number (0-24000), or reset."
+
+# World time messages
+time-set-day: "&aTime set to day."
+time-set-night: "&aTime set to night."
+
+# World weather messages
+weather-set-clear: "&aWeather set to clear."
+weather-set-rain: "&aWeather set to rain."
+weather-set-thunder: "&aWeather set to thunder."
+
+# Warp messages
+warp-teleported: "&aTeleported to warp '%s'."
+warp-not-found: "&cWarp '%s' not found."
+warp-invalid: "&cWarp '%s' is invalid (world not found)."
+warp-created: "&aWarp '%s' created successfully."
+warp-deleted: "&aWarp '%s' deleted successfully."
+warp-list: "&aAvailable warps: %s"
+warp-list-empty: "&cNo warps available."
+warp-usage-set: "&cUsage: /setwarp <name>"
+warp-usage-delete: "&cUsage: /delwarp <name>"
+
+# Repair messages
+repair-success: "&aItem repaired successfully."
+repair-all-success: "&aRepaired %s items."
+repair-no-item: "&cYou must be holding an item to repair."
+repair-cannot-repair: "&cThis item cannot be repaired or is already fully repaired."
+repair-nothing-to-repair: "&cNo items to repair in your inventory."
+
+# Enchant messages
+enchant-opened: "&aOpened enchanting table."
+
+# Freeze messages
+freeze-frozen: "&aFroze %s."
+freeze-unfrozen: "&aUnfroze %s."
+freeze-frozen-target: "&cYou have been frozen!"
+freeze-unfrozen-target: "&aYou have been unfrozen!"
+freeze-cannot-move: "&cYou cannot move while frozen!"
+freeze-usage: "&cUsage: /freeze <player>"
+
+# Vanish messages
+vanish-enabled: "&aVanish mode enabled. You are now invisible."
+vanish-disabled: "&cVanish mode disabled. You are now visible."
+
+# Broadcast messages
+broadcast-format: "&6[Broadcast] &f%message%"
+broadcast-usage: "&cUsage: /broadcast <message>"
