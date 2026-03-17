@@ -82,6 +82,28 @@ public class CommandManager {
         registerCommand("rain", new RainCommand());
         registerCommand("thunder", new ThunderCommand());
 
+        // Warp commands
+        WarpCommand warpCommand = new WarpCommand();
+        registerCommand("warp", warpCommand);
+        registerCommand("setwarp", warpCommand);
+        registerCommand("delwarp", warpCommand);
+
+        // Item commands
+        registerCommand("repair", new RepairCommand());
+        registerCommand("enchantingtable", new EnchantCommand());
+
+        // Player management commands
+        FreezeCommand freezeCommand = new FreezeCommand();
+        registerCommand("freeze", freezeCommand);
+        plugin.getServer().getPluginManager().registerEvents(freezeCommand, plugin);
+
+        VanishCommand vanishCommand = new VanishCommand();
+        registerCommand("vanish", vanishCommand);
+        plugin.getServer().getPluginManager().registerEvents(vanishCommand, plugin);
+
+        // Server commands
+        registerCommand("broadcast", new BroadcastCommand());
+
         plugin.getLogger().info("Commands registered successfully.");
     }
 

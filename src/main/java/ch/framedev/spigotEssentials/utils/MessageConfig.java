@@ -151,6 +151,43 @@ public class MessageConfig {
     public static final String WEATHER_SET_RAIN = "§aWeather set to rain.";
     public static final String WEATHER_SET_THUNDER = "§aWeather set to thunder.";
 
+    // Warp messages
+    public static final String WARP_TELEPORTED = "§aTeleported to warp '%s'.";
+    public static final String WARP_NOT_FOUND = "§cWarp '%s' not found.";
+    public static final String WARP_INVALID = "§cWarp '%s' is invalid (world not found).";
+    public static final String WARP_CREATED = "§aWarp '%s' created successfully.";
+    public static final String WARP_DELETED = "§aWarp '%s' deleted successfully.";
+    public static final String WARP_LIST = "§aAvailable warps: %s";
+    public static final String WARP_LIST_EMPTY = "§cNo warps available.";
+    public static final String WARP_USAGE_SET = "§cUsage: /setwarp <name>";
+    public static final String WARP_USAGE_DELETE = "§cUsage: /delwarp <name>";
+
+    // Repair messages
+    public static final String REPAIR_SUCCESS = "§aItem repaired successfully.";
+    public static final String REPAIR_ALL_SUCCESS = "§aRepaired %s items.";
+    public static final String REPAIR_NO_ITEM = "§cYou must be holding an item to repair.";
+    public static final String REPAIR_CANNOT_REPAIR = "§cThis item cannot be repaired or is already fully repaired.";
+    public static final String REPAIR_NOTHING_TO_REPAIR = "§cNo items to repair in your inventory.";
+
+    // Enchant messages
+    public static final String ENCHANT_OPENED = "§aOpened enchanting table.";
+
+    // Freeze messages
+    public static final String FREEZE_FROZEN = "§aFroze %s.";
+    public static final String FREEZE_UNFROZEN = "§aUnfroze %s.";
+    public static final String FREEZE_FROZEN_TARGET = "§cYou have been frozen!";
+    public static final String FREEZE_UNFROZEN_TARGET = "§aYou have been unfrozen!";
+    public static final String FREEZE_CANNOT_MOVE = "§cYou cannot move while frozen!";
+    public static final String FREEZE_USAGE = "§cUsage: /freeze <player>";
+
+    // Vanish messages
+    public static final String VANISH_ENABLED = "§aVanish mode enabled. You are now invisible.";
+    public static final String VANISH_DISABLED = "§cVanish mode disabled. You are now visible.";
+
+    // Broadcast messages
+    public static final String BROADCAST_FORMAT = "§6[Broadcast] §f%message%";
+    public static final String BROADCAST_USAGE = "§cUsage: /broadcast <message>";
+
     /**
      * Translate color codes in a message
      * @param message The message to translate

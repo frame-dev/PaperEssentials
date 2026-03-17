@@ -150,6 +150,43 @@ commands:
     usage: /thunder [world]
     aliases: [storm]
     permission: spigotessentials.weather
+  warp:
+    description: Teleport to a warp location.
+    usage: /warp [name]
+    permission: spigotessentials.warp
+  setwarp:
+    description: Create a warp location.
+    usage: /setwarp <name>
+    permission: spigotessentials.setwarp
+  delwarp:
+    description: Delete a warp location.
+    usage: /delwarp <name>
+    aliases: [deletewarp, removewarp]
+    permission: spigotessentials.delwarp
+  repair:
+    description: Repair item in hand or all items.
+    usage: /repair [all]
+    aliases: [fix]
+    permission: spigotessentials.repair
+  enchantingtable:
+    description: Open enchanting table interface.
+    usage: /enchantingtable
+    aliases: [etable]
+    permission: spigotessentials.enchant
+  freeze:
+    description: Freeze or unfreeze a player.
+    usage: /freeze <player>
+    permission: spigotessentials.freeze
+  vanish:
+    description: Toggle invisibility mode.
+    usage: /vanish
+    aliases: [v]
+    permission: spigotessentials.vanish
+  broadcast:
+    description: Broadcast a message to all players.
+    usage: /broadcast <message>
+    aliases: [bc, announce]
+    permission: spigotessentials.broadcast
 
 permissions:
   spigotessentials.*:
@@ -179,6 +216,15 @@ permissions:
       spigotessentials.playertime.*: true
       spigotessentials.time: true
       spigotessentials.weather: true
+      spigotessentials.warp: true
+      spigotessentials.setwarp: true
+      spigotessentials.delwarp: true
+      spigotessentials.repair.*: true
+      spigotessentials.enchant: true
+      spigotessentials.freeze: true
+      spigotessentials.vanish: true
+      spigotessentials.vanish.see: true
+      spigotessentials.broadcast: true
 
   spigotessentials.gamemode.*:
     description: Grants all gamemode permissions
@@ -407,4 +453,51 @@ permissions:
 
   spigotessentials.weather:
     description: Allows changing world weather
+    default: op
+
+  spigotessentials.warp:
+    description: Allows teleporting to warps
+    default: true
+
+  spigotessentials.setwarp:
+    description: Allows creating warp locations
+    default: op
+
+  spigotessentials.delwarp:
+    description: Allows deleting warp locations
+    default: op
+
+  spigotessentials.repair.*:
+    description: Grants all repair permissions
+    default: op
+    children:
+      spigotessentials.repair: true
+      spigotessentials.repair.all: true
+
+  spigotessentials.repair:
+    description: Allows repairing item in hand
+    default: op
+
+  spigotessentials.repair.all:
+    description: Allows repairing all items in inventory
+    default: op
+
+  spigotessentials.enchant:
+    description: Allows opening enchanting table
+    default: true
+
+  spigotessentials.freeze:
+    description: Allows freezing/unfreezing players
+    default: op
+
+  spigotessentials.vanish:
+    description: Allows toggling vanish mode
+    default: op
+
+  spigotessentials.vanish.see:
+    description: Allows seeing vanished players
+    default: op
+
+  spigotessentials.broadcast:
+    description: Allows broadcasting messages to all players
     default: op
