@@ -139,7 +139,7 @@ commands:
   sun:
     description: Set world weather to clear.
     usage: /sun [world]
-    aliases: [clear]
+    aliases: [clearweather, sunny]
     permission: spigotessentials.weather
   rain:
     description: Set world weather to rain.
