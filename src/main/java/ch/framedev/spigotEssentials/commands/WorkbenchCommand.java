@@ -4,6 +4,7 @@ import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.MenuType;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -23,7 +24,7 @@ public class WorkbenchCommand extends AbstractCommand {
             return true;
         }
 
-        player.openWorkbench(null, true);
+        player.openInventory(MenuType.CRAFTING.create(player, MessageConfig.component("")));
         sendMessage(player, MessageConfig.WORKBENCH_OPENED);
         return true;
     }

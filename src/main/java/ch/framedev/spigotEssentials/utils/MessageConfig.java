@@ -1,7 +1,9 @@
 package ch.framedev.spigotEssentials.utils;
 
 import ch.framedev.spigotEssentials.PaperEssentials;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
  * Messages are loaded from messages.yml configuration file
  */
 public class MessageConfig {
+    private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacyAmpersand();
 
     private static FileConfiguration messagesConfig;
     private static File messagesFile;
@@ -114,6 +117,9 @@ public class MessageConfig {
     // Enderchest messages
     public static String ENDERCHEST_OPENED;
     public static String ENDERCHEST_OPENED_OTHER;
+    public static String VIRTUAL_STATION_OPENED;
+    public static String TRASH_OPENED;
+    public static String TRASH_TITLE;
 
     // Invsee messages
     public static String INVSEE_OPENED;
@@ -171,6 +177,8 @@ public class MessageConfig {
     public static String WARP_DELETED;
     public static String WARP_LIST;
     public static String WARP_LIST_EMPTY;
+    public static String WARP_INVALID_NAME;
+    public static String WARP_SAVE_FAILED;
     public static String WARP_USAGE_SET;
     public static String WARP_USAGE_DELETE;
 
@@ -199,6 +207,51 @@ public class MessageConfig {
     // Broadcast messages
     public static String BROADCAST_FORMAT;
     public static String BROADCAST_USAGE;
+    public static String CHATCLEAR_BROADCAST;
+    public static String CHATCLEAR_USAGE;
+
+    // Moderation messages
+    public static String DEFAULT_REASON;
+    public static String MUTE_USAGE;
+    public static String MUTE_SET;
+    public static String MUTE_TARGET;
+    public static String TEMPMUTE_USAGE;
+    public static String TEMPMUTE_SET;
+    public static String TEMPMUTE_TARGET;
+    public static String UNMUTE_USAGE;
+    public static String UNMUTE_SUCCESS;
+    public static String UNMUTE_TARGET;
+    public static String UNMUTE_NOT_MUTED;
+    public static String DURATION_INVALID;
+    public static String MUTE_BLOCKED_PERMANENT;
+    public static String MUTE_BLOCKED_TEMP;
+    public static String CHATMUTE_USAGE;
+    public static String CHATMUTE_ENABLED;
+    public static String CHATMUTE_DISABLED;
+    public static String CHATMUTE_ALREADY_ENABLED;
+    public static String CHATMUTE_ALREADY_DISABLED;
+    public static String CHATMUTE_BLOCKED;
+    public static String STAFFCHAT_TOGGLE_ON;
+    public static String STAFFCHAT_TOGGLE_OFF;
+    public static String STAFFCHAT_FORMAT;
+    public static String WARN_USAGE;
+    public static String WARN_ADDED;
+    public static String WARN_TARGET;
+    public static String WARNINGS_USAGE;
+    public static String WARNINGS_HEADER;
+    public static String WARNINGS_ENTRY;
+    public static String WARNINGS_NONE;
+    public static String MUTEINFO_USAGE;
+    public static String MUTEINFO_NONE;
+    public static String MUTEINFO_PERMANENT;
+    public static String MUTEINFO_TEMP;
+    public static String CLEARWARNINGS_USAGE;
+    public static String CLEARWARNINGS_NONE;
+    public static String CLEARWARNINGS_SUCCESS;
+    public static String CLEARWARNINGS_TARGET;
+    public static String STAFFLIST_USAGE;
+    public static String STAFFLIST_FORMAT;
+    public static String STAFFLIST_EMPTY;
 
     /**
      * Load messages from the messages.yml file
@@ -331,6 +384,9 @@ public class MessageConfig {
         // Enderchest messages
         ENDERCHEST_OPENED = colorize(messagesConfig.getString("enderchest-opened", "&aOpened ender chest."));
         ENDERCHEST_OPENED_OTHER = colorize(messagesConfig.getString("enderchest-opened-other", "&aOpened %s's ender chest."));
+        VIRTUAL_STATION_OPENED = colorize(messagesConfig.getString("virtual-station-opened", "&aOpened %s."));
+        TRASH_OPENED = colorize(messagesConfig.getString("trash-opened", "&aOpened trash inventory."));
+        TRASH_TITLE = colorize(messagesConfig.getString("trash-title", "&8Trash"));
 
         // Invsee messages
         INVSEE_OPENED = colorize(messagesConfig.getString("invsee-opened", "&aOpened %s's inventory."));
@@ -388,6 +444,8 @@ public class MessageConfig {
         WARP_DELETED = colorize(messagesConfig.getString("warp-deleted", "&aWarp '%s' deleted successfully."));
         WARP_LIST = colorize(messagesConfig.getString("warp-list", "&aAvailable warps: %s"));
         WARP_LIST_EMPTY = colorize(messagesConfig.getString("warp-list-empty", "&cNo warps available."));
+        WARP_INVALID_NAME = colorize(messagesConfig.getString("warp-invalid-name", "&cWarp name '%s' is invalid. Use only letters, numbers, hyphens, and underscores."));
+        WARP_SAVE_FAILED = colorize(messagesConfig.getString("warp-save-failed", "&cCould not save warp data."));
         WARP_USAGE_SET = colorize(messagesConfig.getString("warp-usage-set", "&cUsage: /setwarp <name>"));
         WARP_USAGE_DELETE = colorize(messagesConfig.getString("warp-usage-delete", "&cUsage: /delwarp <name>"));
 
@@ -416,6 +474,51 @@ public class MessageConfig {
         // Broadcast messages
         BROADCAST_FORMAT = colorize(messagesConfig.getString("broadcast-format", "&6[Broadcast] &f%message%"));
         BROADCAST_USAGE = colorize(messagesConfig.getString("broadcast-usage", "&cUsage: /broadcast <message>"));
+        CHATCLEAR_BROADCAST = colorize(messagesConfig.getString("chatclear-broadcast", "&7Chat was cleared by %s."));
+        CHATCLEAR_USAGE = colorize(messagesConfig.getString("chatclear-usage", "&cUsage: /chatclear"));
+
+        // Moderation messages
+        DEFAULT_REASON = colorize(messagesConfig.getString("default-reason", "No reason provided."));
+        MUTE_USAGE = colorize(messagesConfig.getString("mute-usage", "&cUsage: /mute <player> [reason]"));
+        MUTE_SET = colorize(messagesConfig.getString("mute-set", "&aMuted %s. Reason: %s"));
+        MUTE_TARGET = colorize(messagesConfig.getString("mute-target", "&cYou have been muted. Reason: %s"));
+        TEMPMUTE_USAGE = colorize(messagesConfig.getString("tempmute-usage", "&cUsage: /tempmute <player> <duration> [reason]"));
+        TEMPMUTE_SET = colorize(messagesConfig.getString("tempmute-set", "&aMuted %s for %s. Reason: %s"));
+        TEMPMUTE_TARGET = colorize(messagesConfig.getString("tempmute-target", "&cYou have been muted for %s. Reason: %s"));
+        UNMUTE_USAGE = colorize(messagesConfig.getString("unmute-usage", "&cUsage: /unmute <player>"));
+        UNMUTE_SUCCESS = colorize(messagesConfig.getString("unmute-success", "&aUnmuted %s."));
+        UNMUTE_TARGET = colorize(messagesConfig.getString("unmute-target", "&aYou have been unmuted."));
+        UNMUTE_NOT_MUTED = colorize(messagesConfig.getString("unmute-not-muted", "&c%s is not currently muted."));
+        DURATION_INVALID = colorize(messagesConfig.getString("duration-invalid", "&cInvalid duration. Use formats like 30m, 2h, 1d, or 1w."));
+        MUTE_BLOCKED_PERMANENT = colorize(messagesConfig.getString("mute-blocked-permanent", "&cYou are muted. Reason: %s"));
+        MUTE_BLOCKED_TEMP = colorize(messagesConfig.getString("mute-blocked-temp", "&cYou are muted for %s. Reason: %s"));
+        CHATMUTE_USAGE = colorize(messagesConfig.getString("chatmute-usage", "&cUsage: /chatmute [on|off]"));
+        CHATMUTE_ENABLED = colorize(messagesConfig.getString("chatmute-enabled", "&cGlobal chat has been muted by %s."));
+        CHATMUTE_DISABLED = colorize(messagesConfig.getString("chatmute-disabled", "&aGlobal chat has been unmuted by %s."));
+        CHATMUTE_ALREADY_ENABLED = colorize(messagesConfig.getString("chatmute-already-enabled", "&cGlobal chat is already muted."));
+        CHATMUTE_ALREADY_DISABLED = colorize(messagesConfig.getString("chatmute-already-disabled", "&cGlobal chat is already unmuted."));
+        CHATMUTE_BLOCKED = colorize(messagesConfig.getString("chatmute-blocked", "&cChat is currently muted by staff."));
+        STAFFCHAT_TOGGLE_ON = colorize(messagesConfig.getString("staffchat-toggle-on", "&aStaff chat mode enabled."));
+        STAFFCHAT_TOGGLE_OFF = colorize(messagesConfig.getString("staffchat-toggle-off", "&cStaff chat mode disabled."));
+        STAFFCHAT_FORMAT = colorize(messagesConfig.getString("staffchat-format", "&8[StaffChat] &b%s&8: &f%s"));
+        WARN_USAGE = colorize(messagesConfig.getString("warn-usage", "&cUsage: /warn <player> [reason]"));
+        WARN_ADDED = colorize(messagesConfig.getString("warn-added", "&eAdded a warning to %s. Reason: %s"));
+        WARN_TARGET = colorize(messagesConfig.getString("warn-target", "&eYou have received a warning. Reason: %s"));
+        WARNINGS_USAGE = colorize(messagesConfig.getString("warnings-usage", "&cUsage: /warnings <player>"));
+        WARNINGS_HEADER = colorize(messagesConfig.getString("warnings-header", "&6Warnings for %s &8(%s)&6:"));
+        WARNINGS_ENTRY = colorize(messagesConfig.getString("warnings-entry", "&8#%s &7%s &8- &f%s &8(by %s)"));
+        WARNINGS_NONE = colorize(messagesConfig.getString("warnings-none", "&a%s has no warnings."));
+        MUTEINFO_USAGE = colorize(messagesConfig.getString("muteinfo-usage", "&cUsage: /muteinfo <player>"));
+        MUTEINFO_NONE = colorize(messagesConfig.getString("muteinfo-none", "&a%s is not currently muted."));
+        MUTEINFO_PERMANENT = colorize(messagesConfig.getString("muteinfo-permanent", "&6Mute info for %s: &fPermanent &8| &7Reason: &f%s &8| &7By: &f%s &8| &7At: &f%s"));
+        MUTEINFO_TEMP = colorize(messagesConfig.getString("muteinfo-temp", "&6Mute info for %s: &fTemporary &8| &7Remaining: &f%s &8| &7Reason: &f%s &8| &7By: &f%s &8| &7At: &f%s"));
+        CLEARWARNINGS_USAGE = colorize(messagesConfig.getString("clearwarnings-usage", "&cUsage: /clearwarnings <player>"));
+        CLEARWARNINGS_NONE = colorize(messagesConfig.getString("clearwarnings-none", "&a%s has no warnings to clear."));
+        CLEARWARNINGS_SUCCESS = colorize(messagesConfig.getString("clearwarnings-success", "&aCleared %s warning(s) for %s."));
+        CLEARWARNINGS_TARGET = colorize(messagesConfig.getString("clearwarnings-target", "&e%s cleared %s of your warning(s)."));
+        STAFFLIST_USAGE = colorize(messagesConfig.getString("stafflist-usage", "&cUsage: /stafflist"));
+        STAFFLIST_FORMAT = colorize(messagesConfig.getString("stafflist-format", "&6Online staff &8(%s)&6: &f%s"));
+        STAFFLIST_EMPTY = colorize(messagesConfig.getString("stafflist-empty", "&eNo staff members are currently visible online."));
     }
 
     /**
@@ -424,8 +527,19 @@ public class MessageConfig {
      * @return The message with color codes translated
      */
     public static String colorize(String message) {
-        if (message == null) return null;
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return message;
+    }
+
+    /**
+     * Convert a legacy-formatted message into an Adventure component
+     * @param message The message to convert
+     * @param args Arguments to format the message with
+     * @return The converted component
+     */
+    public static Component component(String message, Object... args) {
+        if (message == null) return Component.empty();
+        String formattedMessage = format(message, args);
+        return LEGACY_SERIALIZER.deserialize(formattedMessage.replace('§', '&'));
     }
 
     /**
@@ -436,7 +550,17 @@ public class MessageConfig {
      */
     public static void send(CommandSender sender, String message, Object... args) {
         if (sender == null || message == null) return;
-        sender.sendMessage(String.format(message, args));
+        sender.sendMessage(component(message, args));
+    }
+
+    /**
+     * Broadcast a formatted message to the whole server
+     * @param message The message to broadcast
+     * @param args Arguments to format the message with
+     */
+    public static void broadcast(String message, Object... args) {
+        if (message == null) return;
+        Bukkit.broadcast(component(message, args));
     }
 
     /**
@@ -447,6 +571,9 @@ public class MessageConfig {
      */
     public static String format(String message, Object... args) {
         if (message == null) return null;
+        if (args == null || args.length == 0) {
+            return message;
+        }
         return String.format(message, args);
     }
 }

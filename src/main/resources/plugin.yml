@@ -1,5 +1,5 @@
 name: PaperEssentials
-version: '1.0-SNAPSHOT'
+version: '${project.version}'
 main: ch.framedev.spigotEssentials.PaperEssentials
 api-version: '1.21'
 author: FrameDev
@@ -96,6 +96,37 @@ commands:
     usage: /enderchest [player]
     aliases: [ec, echest]
     permission: spigotessentials.enderchest.self
+  anvil:
+    description: Open a virtual anvil.
+    usage: /anvil
+    permission: spigotessentials.anvil
+  grindstone:
+    description: Open a virtual grindstone.
+    usage: /grindstone
+    permission: spigotessentials.grindstone
+  loom:
+    description: Open a virtual loom.
+    usage: /loom
+    permission: spigotessentials.loom
+  stonecutter:
+    description: Open a virtual stonecutter.
+    usage: /stonecutter
+    permission: spigotessentials.stonecutter
+  cartographytable:
+    description: Open a virtual cartography table.
+    usage: /cartographytable
+    aliases: [cartography]
+    permission: spigotessentials.cartographytable
+  smithingtable:
+    description: Open a virtual smithing table.
+    usage: /smithingtable
+    aliases: [smithing]
+    permission: spigotessentials.smithingtable
+  trash:
+    description: Open a trash inventory.
+    usage: /trash
+    aliases: [dispose, bin]
+    permission: spigotessentials.trash
   suicide:
     description: Commit suicide.
     usage: /suicide
@@ -187,6 +218,53 @@ commands:
     usage: /broadcast <message>
     aliases: [bc, announce]
     permission: spigotessentials.broadcast
+  chatclear:
+    description: Clear chat for all online players.
+    usage: /chatclear
+    aliases: [clearchat]
+    permission: spigotessentials.chatclear
+  mute:
+    description: Mute a player from public chat.
+    usage: /mute <player> [reason]
+    permission: spigotessentials.mute
+  tempmute:
+    description: Temporarily mute a player from public chat.
+    usage: /tempmute <player> <duration> [reason]
+    permission: spigotessentials.tempmute
+  unmute:
+    description: Remove a player's mute.
+    usage: /unmute <player>
+    permission: spigotessentials.unmute
+  chatmute:
+    description: Toggle or set global chat mute.
+    usage: /chatmute [on|off]
+    permission: spigotessentials.chatmute
+  staffchat:
+    description: Send a staff message or toggle staff chat mode.
+    usage: /staffchat [message]
+    aliases: [sc]
+    permission: spigotessentials.staffchat
+  warn:
+    description: Warn a player.
+    usage: /warn <player> [reason]
+    permission: spigotessentials.warn
+  warnings:
+    description: View a player's warnings.
+    usage: /warnings <player>
+    permission: spigotessentials.warnings
+  muteinfo:
+    description: View a player's active mute information.
+    usage: /muteinfo <player>
+    permission: spigotessentials.muteinfo
+  clearwarnings:
+    description: Clear a player's warning history.
+    usage: /clearwarnings <player>
+    aliases: [clearwarns]
+    permission: spigotessentials.clearwarnings
+  stafflist:
+    description: List online staff members.
+    usage: /stafflist
+    permission: spigotessentials.stafflist
 
 permissions:
   spigotessentials.*:
@@ -207,6 +285,13 @@ permissions:
       spigotessentials.speed: true
       spigotessentials.workbench: true
       spigotessentials.enderchest.*: true
+      spigotessentials.anvil: true
+      spigotessentials.grindstone: true
+      spigotessentials.loom: true
+      spigotessentials.stonecutter: true
+      spigotessentials.cartographytable: true
+      spigotessentials.smithingtable: true
+      spigotessentials.trash: true
       spigotessentials.suicide: true
       spigotessentials.ping.*: true
       spigotessentials.hat: true
@@ -225,6 +310,18 @@ permissions:
       spigotessentials.vanish: true
       spigotessentials.vanish.see: true
       spigotessentials.broadcast: true
+      spigotessentials.chatclear: true
+      spigotessentials.mute: true
+      spigotessentials.tempmute: true
+      spigotessentials.unmute: true
+      spigotessentials.chatmute: true
+      spigotessentials.chatmute.bypass: true
+      spigotessentials.staffchat: true
+      spigotessentials.warn: true
+      spigotessentials.warnings: true
+      spigotessentials.muteinfo: true
+      spigotessentials.clearwarnings: true
+      spigotessentials.stafflist: true
 
   spigotessentials.gamemode.*:
     description: Grants all gamemode permissions
@@ -386,6 +483,34 @@ permissions:
     description: Allows opening others' ender chests
     default: op
 
+  spigotessentials.anvil:
+    description: Allows opening a virtual anvil
+    default: true
+
+  spigotessentials.grindstone:
+    description: Allows opening a virtual grindstone
+    default: true
+
+  spigotessentials.loom:
+    description: Allows opening a virtual loom
+    default: true
+
+  spigotessentials.stonecutter:
+    description: Allows opening a virtual stonecutter
+    default: true
+
+  spigotessentials.cartographytable:
+    description: Allows opening a virtual cartography table
+    default: true
+
+  spigotessentials.smithingtable:
+    description: Allows opening a virtual smithing table
+    default: true
+
+  spigotessentials.trash:
+    description: Allows opening a trash inventory
+    default: true
+
   spigotessentials.suicide:
     description: Allows using suicide command
     default: true
@@ -500,4 +625,52 @@ permissions:
 
   spigotessentials.broadcast:
     description: Allows broadcasting messages to all players
+    default: op
+
+  spigotessentials.chatclear:
+    description: Allows clearing chat for all online players
+    default: op
+
+  spigotessentials.mute:
+    description: Allows muting players
+    default: op
+
+  spigotessentials.tempmute:
+    description: Allows temporarily muting players
+    default: op
+
+  spigotessentials.unmute:
+    description: Allows unmuting players
+    default: op
+
+  spigotessentials.chatmute:
+    description: Allows toggling global chat mute
+    default: op
+
+  spigotessentials.chatmute.bypass:
+    description: Allows bypassing global chat mute
+    default: op
+
+  spigotessentials.staffchat:
+    description: Allows using staff chat
+    default: op
+
+  spigotessentials.warn:
+    description: Allows warning players
+    default: op
+
+  spigotessentials.warnings:
+    description: Allows viewing player warnings
+    default: op
+
+  spigotessentials.muteinfo:
+    description: Allows viewing mute information
+    default: op
+
+  spigotessentials.clearwarnings:
+    description: Allows clearing player warnings
+    default: op
+
+  spigotessentials.stafflist:
+    description: Allows viewing online staff members
     default: op

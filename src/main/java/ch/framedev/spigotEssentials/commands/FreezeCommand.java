@@ -1,6 +1,5 @@
 package ch.framedev.spigotEssentials.commands;
 
-import ch.framedev.spigotEssentials.PaperEssentials;
 import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

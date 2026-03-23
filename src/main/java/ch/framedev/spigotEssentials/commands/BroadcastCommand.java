@@ -23,7 +23,7 @@ public class BroadcastCommand extends AbstractCommand {
         String message = String.join(" ", args);
         String formattedMessage = MessageConfig.BROADCAST_FORMAT.replace("%message%", message);
 
-        sender.getServer().broadcastMessage(formattedMessage);
+        MessageConfig.broadcast(formattedMessage);
 
         return true;
     }

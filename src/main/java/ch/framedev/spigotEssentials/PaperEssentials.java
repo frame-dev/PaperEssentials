@@ -1,7 +1,9 @@
 package ch.framedev.spigotEssentials;
 
+import ch.framedev.spigotEssentials.listeners.ChatModerationListener;
 import ch.framedev.spigotEssentials.listeners.PlayerListeners;
 import ch.framedev.spigotEssentials.managers.CommandManager;
+import ch.framedev.spigotEssentials.managers.ModerationManager;
 import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +15,7 @@ public final class PaperEssentials extends JavaPlugin {
 
     private static PaperEssentials instance;
     private CommandManager commandManager;
+    private ModerationManager moderationManager;
 
     @Override
     public void onEnable() {
@@ -23,6 +26,9 @@ public final class PaperEssentials extends JavaPlugin {
 
         // Load messages from messages.yml
         MessageConfig.load();
+
+        // Initialize moderation state
+        this.moderationManager = new ModerationManager(this);
 
         // Register managers
         this.commandManager = new CommandManager(this);
@@ -36,6 +42,9 @@ public final class PaperEssentials extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (moderationManager != null) {
+            moderationManager.shutdown();
+        }
         getLogger().info("PaperEssentials has been disabled.");
         instance = null;
     }
@@ -56,6 +65,7 @@ public final class PaperEssentials extends JavaPlugin {
 
         PlayerListeners playerListeners = new PlayerListeners(this);
         getServer().getPluginManager().registerEvents(playerListeners, this);
+        getServer().getPluginManager().registerEvents(new ChatModerationListener(this), this);
 
         getLogger().info("Listeners registered successfully.");
     }
@@ -74,5 +84,13 @@ public final class PaperEssentials extends JavaPlugin {
      */
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    /**
+     * Get the moderation manager
+     * @return The moderation manager
+     */
+    public ModerationManager getModerationManager() {
+        return moderationManager;
     }
 }

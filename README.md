@@ -140,6 +140,7 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 | `/freeze` | Freeze/unfreeze a player | `/freeze <player>` | - |
 | `/vanish` | Toggle invisibility | `/vanish` | `/v` |
 | `/broadcast` | Broadcast message to all players | `/broadcast <message>` | `/bc`, `/announce` |
+| `/chatclear` | Clear chat for all online players | `/chatclear` | `/clearchat` |
 
 ## Permissions
 
@@ -225,6 +226,7 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 | `spigotessentials.vanish` | Toggle vanish mode | op |
 | `spigotessentials.vanish.see` | See vanished players | op |
 | `spigotessentials.broadcast` | Broadcast messages | op |
+| `spigotessentials.chatclear` | Clear chat for all online players | op |
 
 ## Configuration
 

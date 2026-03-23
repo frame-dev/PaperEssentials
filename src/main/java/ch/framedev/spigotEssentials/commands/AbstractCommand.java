@@ -64,7 +64,7 @@ public abstract class AbstractCommand implements CommandExecutor {
      */
     protected boolean checkPermission(CommandSender sender, String permission, String message) {
         if (!hasPermission(sender, permission)) {
-            sender.sendMessage(message);
+            MessageConfig.send(sender, message);
             return false;
         }
         return true;
@@ -79,7 +79,7 @@ public abstract class AbstractCommand implements CommandExecutor {
     protected Player getPlayer(CommandSender sender, String name) {
         Player player = sender.getServer().getPlayerExact(name);
         if (player == null) {
-            sender.sendMessage(MessageConfig.PLAYER_NOT_FOUND);
+            MessageConfig.send(sender, MessageConfig.PLAYER_NOT_FOUND);
         }
         return player;
     }

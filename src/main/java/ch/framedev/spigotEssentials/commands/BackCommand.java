@@ -70,7 +70,7 @@ public class BackCommand extends AbstractCommand implements Listener {
         if (!player.hasPermission("spigotessentials.back")) return;
 
         Location deathLocation = player.getLocation();
-        if (deathLocation != null && deathLocation.getWorld() != null) {
+        if (deathLocation.getWorld() != null) {
             lastLocations.put(player, deathLocation);
             sendMessage(player, MessageConfig.BACK_USE_COMMAND);
         }
@@ -84,7 +84,7 @@ public class BackCommand extends AbstractCommand implements Listener {
         if (!player.hasPermission("spigotessentials.back")) return;
 
         Location fromLocation = event.getFrom();
-        if (fromLocation != null && fromLocation.getWorld() != null) {
+        if (fromLocation.getWorld() != null) {
             lastLocations.put(player, fromLocation);
         }
     }

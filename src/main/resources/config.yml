@@ -56,3 +56,5 @@ first-join-broadcast: true
 # Placeholders: %player% - player name
 
 first-join-message: "&a&lWelcome &e%player% &a&lto the server for the first time!"
+
+sign-change-formatting: true

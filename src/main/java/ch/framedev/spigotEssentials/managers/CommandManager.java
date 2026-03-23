@@ -63,6 +63,14 @@ public class CommandManager {
         registerCommand("speed", new SpeedCommand());
         registerCommand("workbench", new WorkbenchCommand());
         registerCommand("enderchest", new EnderChestCommand());
+        VirtualStationCommand virtualStationCommand = new VirtualStationCommand();
+        registerCommand("anvil", virtualStationCommand);
+        registerCommand("grindstone", virtualStationCommand);
+        registerCommand("loom", virtualStationCommand);
+        registerCommand("stonecutter", virtualStationCommand);
+        registerCommand("cartographytable", virtualStationCommand);
+        registerCommand("smithingtable", virtualStationCommand);
+        registerCommand("trash", new TrashCommand());
         registerCommand("suicide", new SuicideCommand());
         registerCommand("ping", new PingCommand());
         registerCommand("hat", new HatCommand());
@@ -83,14 +91,16 @@ public class CommandManager {
         registerCommand("thunder", new ThunderCommand());
 
         // Warp commands
-        WarpCommand warpCommand = new WarpCommand();
-        registerCommand("warp", warpCommand);
-        registerCommand("setwarp", warpCommand);
-        registerCommand("delwarp", warpCommand);
+        WarpCommand warpCommand = new WarpCommand(plugin);
+        registerCommand("warp", warpCommand, warpCommand);
+        registerCommand("setwarp", warpCommand, warpCommand);
+        registerCommand("delwarp", warpCommand, warpCommand);
 
         // Item commands
         registerCommand("repair", new RepairCommand());
-        registerCommand("enchantingtable", new EnchantCommand());
+        EnchantCommand enchantCommand = new EnchantCommand();
+        registerCommand("enchantingtable", enchantCommand);
+        plugin.getServer().getPluginManager().registerEvents(enchantCommand, plugin);
 
         // Player management commands
         FreezeCommand freezeCommand = new FreezeCommand();
@@ -103,6 +113,24 @@ public class CommandManager {
 
         // Server commands
         registerCommand("broadcast", new BroadcastCommand());
+        registerCommand("chatclear", new ChatClearCommand());
+
+        // Moderation commands
+        MuteCommand muteCommand = new MuteCommand(plugin);
+        registerCommand("mute", muteCommand);
+        registerCommand("tempmute", muteCommand);
+        registerCommand("unmute", muteCommand);
+        registerCommand("chatmute", new ChatMuteCommand(plugin));
+        registerCommand("staffchat", new StaffChatCommand(plugin));
+
+        WarningCommand warningCommand = new WarningCommand(plugin);
+        registerCommand("warn", warningCommand);
+        registerCommand("warnings", warningCommand);
+
+        ModerationUtilityCommand moderationUtilityCommand = new ModerationUtilityCommand(plugin);
+        registerCommand("muteinfo", moderationUtilityCommand);
+        registerCommand("clearwarnings", moderationUtilityCommand);
+        registerCommand("stafflist", moderationUtilityCommand);
 
         plugin.getLogger().info("Commands registered successfully.");
     }

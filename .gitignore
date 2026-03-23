@@ -100,3 +100,4 @@ whitelist.json
 # Plugin data files (optional - uncomment if needed)
 # config.yml
 # locations.yml
+/TestServer/
