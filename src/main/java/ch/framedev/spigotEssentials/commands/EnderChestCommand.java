@@ -38,7 +38,7 @@ public class EnderChestCommand extends AbstractCommand {
             sendMessage(player, MessageConfig.ENDERCHEST_OPENED_OTHER, target.getName());
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/enderchest [player]");
+            sendMessage(sender, MessageConfig.ENDERCHEST_USAGE);
             return false;
         }
     }

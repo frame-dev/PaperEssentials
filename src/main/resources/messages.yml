@@ -1,6 +1,8 @@
 # PaperEssentials Messages Configuration
 # Use '&' for color codes (e.g., &a = green, &c = red, &6 = gold)
 # Use %s for placeholders in messages
+# Example translations are exported to plugins/PaperEssentials/message-examples/
+# on first startup. Copy one over messages.yml if you want to use it as a base.
 
 # Permission messages
 no-permission-self: "&cYou do not have permission to use this command."
@@ -10,12 +12,15 @@ player-not-found: "&cPlayer not found."
 
 # Command messages
 invalid-usage: "&cInvalid usage. Use: %s"
+world-command-console-usage: "&cUsage from console: /%s <world>"
+world-not-found: "&cWorld not found: %s"
 
 # GameMode messages
 gamemode-changed-self: "&aYour game mode has been changed to %s."
 gamemode-changed-other: "&a%s's game mode has been changed to %s."
 gamemode-changed-target: "&aYour game mode has been changed to %s."
 gamemode-invalid: "&cInvalid game mode. Use survival, creative, adventure, or spectator."
+gamemode-usage: "&cUsage: /gamemode <mode> [player]"
 
 # Fly messages
 fly-enabled-self: "&aFly mode enabled."
@@ -24,16 +29,20 @@ fly-enabled-other: "&aFly mode enabled for %s."
 fly-disabled-other: "&cFly mode disabled for %s."
 fly-enabled-target: "&aYour fly mode has been enabled."
 fly-disabled-target: "&cYour fly mode has been disabled."
+fly-usage: "&cUsage: /fly [player]"
 
 # Heal messages
 heal-self: "&aYou have been healed."
 heal-other: "&aYou have healed %s."
 heal-target: "&aYou have been healed by %s."
+heal-usage: "&cUsage: /heal [player]"
+heal-attribute-missing: "&cCould not retrieve max health attribute."
 
 # Feed messages
 feed-self: "&aYou have been fed."
 feed-other: "&aYou have fed %s."
 feed-target: "&aYou have been fed by %s."
+feed-usage: "&cUsage: /feed [player]"
 
 # God mode messages
 god-enabled-self: "&aGod mode enabled."
@@ -42,6 +51,7 @@ god-enabled-other: "&aGod mode enabled for %s."
 god-disabled-other: "&cGod mode disabled for %s."
 god-enabled-target: "&aYour god mode has been enabled."
 god-disabled-target: "&cYour god mode has been disabled."
+god-usage: "&cUsage: /god [player]"
 
 # Home messages
 home-set: "&aHome set successfully."
@@ -52,6 +62,13 @@ home-teleported: "&aTeleported to home."
 home-teleported-named: "&aTeleported to home '%s'."
 home-deleted: "&aHome deleted successfully."
 home-deleted-named: "&aHome '%s' deleted successfully."
+sethome-usage: "&cUsage: /sethome [name]"
+home-usage: "&cUsage: /home [name]"
+delhome-usage: "&cUsage: /delhome [name]"
+home-save-failed: "&cFailed to save home location."
+home-delete-failed: "&cFailed to delete home location."
+home-delete-not-set: "&cHome not set."
+home-delete-not-set-named: "&cHome '%s' not set."
 
 # Spawn messages
 spawn-set: "&aSpawn point set!"
@@ -59,6 +76,7 @@ spawn-teleported: "&aTeleported to spawn point!"
 spawn-not-set: "&cSpawn point is not set."
 spawn-teleported-respawn: "&aTeleported to spawn point on respawn!"
 spawn-teleported-join: "&aTeleported to spawn point on join!"
+spawn-save-failed: "&cFailed to save spawn location."
 
 # Back messages
 back-teleported: "&aTeleported back to your last location!"
@@ -84,11 +102,13 @@ tpa-cannot-self: "&cYou cannot teleport to yourself."
 clear-self: "&aYour inventory has been cleared."
 clear-other: "&aCleared %s's inventory."
 clear-target: "&aYour inventory has been cleared by %s."
+clear-usage: "&cUsage: /clear [player]"
 
 # Speed command messages
 speed-set: "&aYour %s speed has been set to %s."
 speed-set-other: "&aSet %s's %s speed to %s."
 speed-invalid: "&cSpeed must be a number between 0 and 10."
+speed-usage: "&cUsage: /speed <walk|fly> <0-10> [player]"
 
 # Workbench messages
 workbench-opened: "&aOpened crafting table."
@@ -96,12 +116,39 @@ workbench-opened: "&aOpened crafting table."
 # Enderchest messages
 enderchest-opened: "&aOpened ender chest."
 enderchest-opened-other: "&aOpened %s's ender chest."
+enderchest-usage: "&cUsage: /enderchest [player]"
+backpack-opened-self: "&aOpened your backpack."
+backpack-opened-other: "&aOpened %s's backpack."
+backpack-usage: "&cUsage: /backpack [player]"
+backpack-title: "&8Backpack: %s"
+backpack-load-failed: "&cCould not load backpack data."
+backpack-save-failed: "&cCould not save backpack data."
 virtual-station-opened: "&aOpened %s."
+virtual-station-usage: "&cUsage: /%s"
 trash-opened: "&aOpened trash inventory."
 trash-title: "&8Trash"
+trash-usage: "&cUsage: /trash"
 
 # Invsee messages
 invsee-opened: "&aOpened %s's inventory."
+invsee-usage: "&cUsage: /invsee <player>"
+
+# Private messaging messages
+msg-usage: "&cUsage: /msg <player> <message>"
+msg-sent: "&8[&dMe &7-> &d%s&8] &f%s"
+msg-received: "&8[&d%s &7-> &dMe&8] &f%s"
+msg-cannot-self: "&cYou cannot message yourself."
+msg-target-disabled: "&c%s is not accepting private messages."
+msg-ignored: "&c%s is ignoring you."
+reply-usage: "&cUsage: /reply <message>"
+reply-no-target: "&cYou have nobody to reply to."
+reply-player-offline: "&cThat player is no longer online."
+ignore-usage: "&cUsage: /ignore <player>"
+ignore-enabled: "&aYou are now ignoring %s."
+ignore-disabled: "&aYou are no longer ignoring %s."
+msgtoggle-usage: "&cUsage: /msgtoggle"
+msgtoggle-enabled: "&cYou are no longer accepting private messages."
+msgtoggle-disabled: "&aYou are now accepting private messages."
 
 # Suicide command messages
 suicide-success: "&cYou have committed suicide."
@@ -109,6 +156,7 @@ suicide-success: "&cYou have committed suicide."
 # Ping command messages
 ping-self: "&aYour ping: %sms"
 ping-other: "&a%s's ping: %sms"
+ping-usage: "&cUsage: /ping [player]"
 
 # Hat command messages
 hat-set: "&aYou are now wearing %s as a hat!"
@@ -131,6 +179,7 @@ pweather-set-other: "&aSet %s's personal weather to %s."
 pweather-reset: "&aYour personal weather has been reset."
 pweather-reset-other: "&aReset %s's personal weather."
 pweather-invalid: "&cInvalid weather type. Use: clear, rain, or reset."
+pweather-usage: "&cUsage: /playerweather <clear|rain|reset> [player]"
 
 # Player time messages
 ptime-set: "&aYour personal time has been set to %s."
@@ -138,6 +187,7 @@ ptime-set-other: "&aSet %s's personal time to %s."
 ptime-reset: "&aYour personal time has been reset."
 ptime-reset-other: "&aReset %s's personal time."
 ptime-invalid: "&cInvalid time. Use: day, night, noon, midnight, or a number (0-24000), or reset."
+ptime-usage: "&cUsage: /playertime <time|reset> [player]"
 
 # World time messages
 time-set-day: "&aTime set to day."
@@ -183,6 +233,9 @@ freeze-usage: "&cUsage: /freeze <player>"
 vanish-enabled: "&aVanish mode enabled. You are now invisible."
 vanish-disabled: "&cVanish mode disabled. You are now visible."
 
+# Teleport command messages
+teleport-request-usage: "&cUsage: /%s <player>"
+
 # Broadcast messages
 broadcast-format: "&6[Broadcast] &f%message%"
 broadcast-usage: "&cUsage: /broadcast <message>"
@@ -213,6 +266,7 @@ chatmute-blocked: "&cChat is currently muted by staff."
 staffchat-toggle-on: "&aStaff chat mode enabled."
 staffchat-toggle-off: "&cStaff chat mode disabled."
 staffchat-format: "&8[StaffChat] &b%s&8: &f%s"
+staffchat-usage: "&cUsage: /staffchat <message>"
 warn-usage: "&cUsage: /warn <player> [reason]"
 warn-added: "&eAdded a warning to %s. Reason: %s"
 warn-target: "&eYou have received a warning. Reason: %s"

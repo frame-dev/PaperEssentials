@@ -213,7 +213,7 @@ public class WarpCommand extends AbstractCommand implements TabCompleter {
         }
 
         String commandName = command.getName().toLowerCase(Locale.ROOT);
-        if ("setwarp".equals(commandName) || !hasPermission(sender, getPermissionForCommand(commandName))) {
+        if (!hasPermission(sender, getPermissionForCommand(commandName))) {
             return List.of();
         }
 
@@ -226,6 +226,7 @@ public class WarpCommand extends AbstractCommand implements TabCompleter {
     private String getPermissionForCommand(String commandName) {
         return switch (commandName) {
             case "warp" -> "spigotessentials.warp";
+            case "setwarp" -> "spigotessentials.setwarp";
             case "delwarp" -> "spigotessentials.delwarp";
             default -> "";
         };

@@ -32,7 +32,7 @@ public class HealCommand extends AbstractCommand {
             }
             return healPlayer(sender, target);
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/heal [player]");
+            sendMessage(sender, MessageConfig.HEAL_USAGE);
             return false;
         }
     }
@@ -40,7 +40,7 @@ public class HealCommand extends AbstractCommand {
     private boolean healPlayer(CommandSender sender, Player target) {
         AttributeInstance maxHealth = target.getAttribute(Attribute.MAX_HEALTH);
         if (maxHealth == null) {
-            sendMessage(sender, "§cCould not retrieve max health attribute.");
+            sendMessage(sender, MessageConfig.HEAL_ATTRIBUTE_MISSING);
             return true;
         }
 

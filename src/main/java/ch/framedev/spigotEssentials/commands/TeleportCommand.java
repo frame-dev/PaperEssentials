@@ -60,7 +60,7 @@ public class TeleportCommand extends AbstractCommand implements Listener {
     private boolean handleTeleportRequest(Player player, String[] args, Map<Player, TeleportRequest> requests,
                                           String cmdType, String acceptCmd, String denyCmd) {
         if (args.length != 1) {
-            sendMessage(player, MessageConfig.INVALID_USAGE, "/" + cmdType + " <player>");
+            sendMessage(player, MessageConfig.TELEPORT_REQUEST_USAGE, cmdType);
             return true;
         }
 

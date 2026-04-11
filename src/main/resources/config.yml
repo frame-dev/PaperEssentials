@@ -33,6 +33,14 @@ back-command: true
 tpa-timeout: 60
 
 # ===================================
+# Backpack Settings
+# ===================================
+# Backpack size in slots.
+# Must be a multiple of 9 between 9 and 54.
+
+backpack-size: 27
+
+# ===================================
 # AFK Settings
 # ===================================
 # Enable automatic AFK detection

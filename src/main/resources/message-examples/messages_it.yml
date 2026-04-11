@@ -1,0 +1,285 @@
+# Configurazione messaggi PaperEssentials (Italiano)
+# Usa '&' per i codici colore (es. &a = verde, &c = rosso, &6 = oro)
+# Usa %s per i placeholder
+
+# Permessi
+no-permission-self: "&cNon hai il permesso di usare questo comando."
+no-permission-others: "&cNon hai il permesso di usare questo comando sugli altri."
+player-only: "&cQuesto comando puo essere usato solo dai giocatori."
+player-not-found: "&cGiocatore non trovato."
+
+# Comandi
+invalid-usage: "&cUso non valido. Usa: %s"
+world-command-console-usage: "&cUso da console: /%s <world>"
+world-not-found: "&cMondo non trovato: %s"
+
+# Modalita di gioco
+gamemode-changed-self: "&aLa tua modalita di gioco e stata cambiata in %s."
+gamemode-changed-other: "&aLa modalita di gioco di %s e stata cambiata in %s."
+gamemode-changed-target: "&aLa tua modalita di gioco e stata cambiata in %s."
+gamemode-invalid: "&cModalita di gioco non valida. Usa survival, creative, adventure o spectator."
+gamemode-usage: "&cUso: /gamemode <mode> [player]"
+
+# Volo
+fly-enabled-self: "&aModalita volo attivata."
+fly-disabled-self: "&cModalita volo disattivata."
+fly-enabled-other: "&aModalita volo attivata per %s."
+fly-disabled-other: "&cModalita volo disattivata per %s."
+fly-enabled-target: "&aLa tua modalita volo e stata attivata."
+fly-disabled-target: "&cLa tua modalita volo e stata disattivata."
+fly-usage: "&cUso: /fly [player]"
+
+# Cura
+heal-self: "&aSei stato curato."
+heal-other: "&aHai curato %s."
+heal-target: "&aSei stato curato da %s."
+heal-usage: "&cUso: /heal [player]"
+heal-attribute-missing: "&cImpossibile recuperare l'attributo della vita massima."
+
+# Cibo
+feed-self: "&aSei stato sfamato."
+feed-other: "&aHai sfamato %s."
+feed-target: "&aSei stato sfamato da %s."
+feed-usage: "&cUso: /feed [player]"
+
+# God mode
+god-enabled-self: "&aGod mode attivata."
+god-disabled-self: "&cGod mode disattivata."
+god-enabled-other: "&aGod mode attivata per %s."
+god-disabled-other: "&cGod mode disattivata per %s."
+god-enabled-target: "&aLa tua god mode e stata attivata."
+god-disabled-target: "&cLa tua god mode e stata disattivata."
+god-usage: "&cUso: /god [player]"
+
+# Home
+home-set: "&aHome impostata con successo."
+home-set-named: "&aHome '%s' impostata con successo."
+home-not-set: "&cHome non impostata. Usa /sethome per impostare la tua home."
+home-not-set-named: "&cHome '%s' non impostata. Usa /sethome %s per impostare questa home."
+home-teleported: "&aTeletrasportato alla home."
+home-teleported-named: "&aTeletrasportato alla home '%s'."
+home-deleted: "&aHome eliminata con successo."
+home-deleted-named: "&aHome '%s' eliminata con successo."
+sethome-usage: "&cUso: /sethome [name]"
+home-usage: "&cUso: /home [name]"
+delhome-usage: "&cUso: /delhome [name]"
+home-save-failed: "&cImpossibile salvare la posizione della home."
+home-delete-failed: "&cImpossibile eliminare la home."
+home-delete-not-set: "&cHome non impostata."
+home-delete-not-set-named: "&cHome '%s' non impostata."
+
+# Spawn
+spawn-set: "&aPunto di spawn impostato!"
+spawn-teleported: "&aTeletrasportato al punto di spawn!"
+spawn-not-set: "&cIl punto di spawn non e impostato."
+spawn-teleported-respawn: "&aTeletrasportato al punto di spawn al respawn!"
+spawn-teleported-join: "&aTeletrasportato al punto di spawn all'accesso!"
+spawn-save-failed: "&cImpossibile salvare il punto di spawn."
+
+# Back
+back-teleported: "&aTeletrasportato alla tua ultima posizione!"
+back-no-location: "&cNessuna posizione precedente trovata."
+back-disabled: "&cIl comando /back e disabilitato nella configurazione."
+back-use-command: "&aUsa /back per tornare alla tua ultima posizione."
+
+# Teletrasporto
+tpa-sent: "&aRichiesta di teletrasporto inviata a %s."
+tpa-received: "&a%s vuole teletrasportarsi da te. Digita %s per accettare o %s per rifiutare."
+tpahere-received: "&a%s vuole teletrasportarti da lui. Digita %s per accettare o %s per rifiutare."
+tpa-no-request: "&cNessuna richiesta di teletrasporto trovata."
+tpa-expired: "&cLa richiesta di teletrasporto e scaduta."
+tpa-player-offline: "&cIl giocatore non e piu online."
+tpa-accepted-sender: "&aSei stato teletrasportato da %s."
+tpa-accepted-target: "&aRichiesta di teletrasporto accettata."
+tpahere-accepted-sender: "&a%s e stato teletrasportato da te."
+tpa-denied-sender: "&cLa tua richiesta di teletrasporto a %s e stata rifiutata."
+tpa-denied-target: "&cRichiesta di teletrasporto di %s rifiutata."
+tpa-cannot-self: "&cNon puoi teletrasportarti da te stesso."
+
+# Clear
+clear-self: "&aIl tuo inventario e stato svuotato."
+clear-other: "&aInventario di %s svuotato."
+clear-target: "&aIl tuo inventario e stato svuotato da %s."
+clear-usage: "&cUso: /clear [player]"
+
+# Velocita
+speed-set: "&aLa tua velocita %s e stata impostata a %s."
+speed-set-other: "&aImpostata la velocita %s di %s a %s."
+speed-invalid: "&cLa velocita deve essere un numero tra 0 e 10."
+speed-usage: "&cUso: /speed <walk|fly> <0-10> [player]"
+
+# Workbench
+workbench-opened: "&aBanco da lavoro aperto."
+
+# Ender chest
+enderchest-opened: "&aEnder chest aperta."
+enderchest-opened-other: "&aEnder chest di %s aperta."
+enderchest-usage: "&cUso: /enderchest [player]"
+backpack-opened-self: "&aHai aperto il tuo zaino."
+backpack-opened-other: "&aHai aperto lo zaino di %s."
+backpack-usage: "&cUso: /backpack [player]"
+backpack-title: "&8Zaino: %s"
+backpack-load-failed: "&cImpossibile caricare i dati dello zaino."
+backpack-save-failed: "&cImpossibile salvare i dati dello zaino."
+virtual-station-opened: "&a%s aperto."
+virtual-station-usage: "&cUso: /%s"
+trash-opened: "&aCestino aperto."
+trash-title: "&8Cestino"
+trash-usage: "&cUso: /trash"
+
+# Invsee
+invsee-opened: "&aInventario di %s aperto."
+invsee-usage: "&cUso: /invsee <player>"
+
+# Messaggi privati
+msg-usage: "&cUso: /msg <player> <message>"
+msg-sent: "&8[&dIo &7-> &d%s&8] &f%s"
+msg-received: "&8[&d%s &7-> &dIo&8] &f%s"
+msg-cannot-self: "&cNon puoi mandare un messaggio a te stesso."
+msg-target-disabled: "&c%s non accetta messaggi privati."
+msg-ignored: "&c%s ti sta ignorando."
+reply-usage: "&cUso: /reply <message>"
+reply-no-target: "&cNon hai nessuno a cui rispondere."
+reply-player-offline: "&cQuel giocatore non e piu online."
+ignore-usage: "&cUso: /ignore <player>"
+ignore-enabled: "&aOra stai ignorando %s."
+ignore-disabled: "&aNon stai piu ignorando %s."
+msgtoggle-usage: "&cUso: /msgtoggle"
+msgtoggle-enabled: "&cNon accetti piu messaggi privati."
+msgtoggle-disabled: "&aOra accetti di nuovo i messaggi privati."
+
+# Suicidio
+suicide-success: "&cTi sei suicidato."
+
+# Ping
+ping-self: "&aIl tuo ping: %sms"
+ping-other: "&aPing di %s: %sms"
+ping-usage: "&cUso: /ping [player]"
+
+# Cappello
+hat-set: "&aOra stai indossando %s come cappello!"
+hat-nothing: "&cDevi tenere un oggetto in mano per indossarlo come cappello."
+hat-air: "&cNon puoi indossare l'aria come cappello."
+
+# AFK
+afk-enabled: "&7Ora sei AFK."
+afk-disabled: "&7Non sei piu AFK."
+afk-broadcast-enabled: "&7%s e ora AFK."
+afk-broadcast-disabled: "&7%s non e piu AFK."
+afk-auto: "&7%s e ora AFK (Automatico)."
+
+# Primo accesso
+first-join-broadcast: "&aDiamo il benvenuto a %s sul server per la prima volta!"
+
+# Meteo personale
+pweather-set: "&aIl tuo meteo personale e stato impostato su %s."
+pweather-set-other: "&aIl meteo personale di %s e stato impostato su %s."
+pweather-reset: "&aIl tuo meteo personale e stato reimpostato."
+pweather-reset-other: "&aIl meteo personale di %s e stato reimpostato."
+pweather-invalid: "&cTipo di meteo non valido. Usa: clear, rain o reset."
+pweather-usage: "&cUso: /playerweather <clear|rain|reset> [player]"
+
+# Tempo personale
+ptime-set: "&aIl tuo tempo personale e stato impostato su %s."
+ptime-set-other: "&aIl tempo personale di %s e stato impostato su %s."
+ptime-reset: "&aIl tuo tempo personale e stato reimpostato."
+ptime-reset-other: "&aIl tempo personale di %s e stato reimpostato."
+ptime-invalid: "&cTempo non valido. Usa: day, night, noon, midnight, un numero (0-24000) o reset."
+ptime-usage: "&cUso: /playertime <time|reset> [player]"
+
+# Tempo del mondo
+time-set-day: "&aTempo impostato su giorno."
+time-set-night: "&aTempo impostato su notte."
+
+# Meteo del mondo
+weather-set-clear: "&aMeteo impostato su sereno."
+weather-set-rain: "&aMeteo impostato su pioggia."
+weather-set-thunder: "&aMeteo impostato su temporale."
+
+# Warp
+warp-teleported: "&aTeletrasportato al warp '%s'."
+warp-not-found: "&cWarp '%s' non trovato."
+warp-invalid: "&cWarp '%s' non valido (mondo non trovato)."
+warp-created: "&aWarp '%s' creato con successo."
+warp-deleted: "&aWarp '%s' eliminato con successo."
+warp-list: "&aWarp disponibili: %s"
+warp-list-empty: "&cNessun warp disponibile."
+warp-invalid-name: "&cIl nome del warp '%s' non e valido. Usa solo lettere, numeri, trattini e underscore."
+warp-save-failed: "&cImpossibile salvare i dati dei warp."
+warp-usage-set: "&cUso: /setwarp <name>"
+warp-usage-delete: "&cUso: /delwarp <name>"
+
+# Riparazione
+repair-success: "&aOggetto riparato con successo."
+repair-all-success: "&aRiparati %s oggetti."
+repair-no-item: "&cDevi tenere un oggetto in mano per ripararlo."
+repair-cannot-repair: "&cQuesto oggetto non puo essere riparato oppure e gia completamente riparato."
+repair-nothing-to-repair: "&cNessun oggetto da riparare nel tuo inventario."
+
+# Incantesimi
+enchant-opened: "&aTavolo degli incantesimi aperto."
+
+# Freeze
+freeze-frozen: "&a%s bloccato."
+freeze-unfrozen: "&a%s sbloccato."
+freeze-frozen-target: "&cSei stato bloccato!"
+freeze-unfrozen-target: "&aNon sei piu bloccato!"
+freeze-cannot-move: "&cNon puoi muoverti mentre sei bloccato!"
+freeze-usage: "&cUso: /freeze <player>"
+
+# Vanish
+vanish-enabled: "&aModalita vanish attivata. Ora sei invisibile."
+vanish-disabled: "&cModalita vanish disattivata. Ora sei visibile."
+
+# Uso teletrasporto
+teleport-request-usage: "&cUso: /%s <player>"
+
+# Broadcast
+broadcast-format: "&6[Annuncio] &f%message%"
+broadcast-usage: "&cUso: /broadcast <message>"
+chatclear-broadcast: "&7La chat e stata pulita da %s."
+chatclear-usage: "&cUso: /chatclear"
+
+# Moderazione
+default-reason: "Nessun motivo fornito."
+mute-usage: "&cUso: /mute <player> [reason]"
+mute-set: "&a%s e stato mutato. Motivo: %s"
+mute-target: "&cSei stato mutato. Motivo: %s"
+tempmute-usage: "&cUso: /tempmute <player> <duration> [reason]"
+tempmute-set: "&a%s e stato mutato per %s. Motivo: %s"
+tempmute-target: "&cSei stato mutato per %s. Motivo: %s"
+unmute-usage: "&cUso: /unmute <player>"
+unmute-success: "&a%s e stato smutato."
+unmute-target: "&aSei stato smutato."
+unmute-not-muted: "&c%s non e attualmente mutato."
+duration-invalid: "&cDurata non valida. Usa formati come 30m, 2h, 1d o 1w."
+mute-blocked-permanent: "&cSei mutato. Motivo: %s"
+mute-blocked-temp: "&cSei mutato per %s. Motivo: %s"
+chatmute-usage: "&cUso: /chatmute [on|off]"
+chatmute-enabled: "&cLa chat globale e stata mutata da %s."
+chatmute-disabled: "&aLa chat globale e stata smutata da %s."
+chatmute-already-enabled: "&cLa chat globale e gia mutata."
+chatmute-already-disabled: "&cLa chat globale e gia attiva."
+chatmute-blocked: "&cLa chat e attualmente mutata dallo staff."
+staffchat-toggle-on: "&aModalita staff chat attivata."
+staffchat-toggle-off: "&cModalita staff chat disattivata."
+staffchat-format: "&8[StaffChat] &b%s&8: &f%s"
+staffchat-usage: "&cUso: /staffchat <message>"
+warn-usage: "&cUso: /warn <player> [reason]"
+warn-added: "&eAggiunto un avviso a %s. Motivo: %s"
+warn-target: "&eHai ricevuto un avviso. Motivo: %s"
+warnings-usage: "&cUso: /warnings <player>"
+warnings-header: "&6Avvisi per %s &8(%s)&6:"
+warnings-entry: "&8#%s &7%s &8- &f%s &8(da %s)"
+warnings-none: "&a%s non ha avvisi."
+muteinfo-usage: "&cUso: /muteinfo <player>"
+muteinfo-none: "&a%s non e attualmente mutato."
+muteinfo-permanent: "&6Info mute per %s: &fPermanente &8| &7Motivo: &f%s &8| &7Da: &f%s &8| &7Alle: &f%s"
+muteinfo-temp: "&6Info mute per %s: &fTemporaneo &8| &7Rimanente: &f%s &8| &7Motivo: &f%s &8| &7Da: &f%s &8| &7Alle: &f%s"
+clearwarnings-usage: "&cUso: /clearwarnings <player>"
+clearwarnings-none: "&a%s non ha avvisi da cancellare."
+clearwarnings-success: "&aCancellati %s avviso/i per %s."
+clearwarnings-target: "&e%s ha cancellato %s dei tuoi avvisi."
+stafflist-usage: "&cUso: /stafflist"
+stafflist-format: "&6Staff online &8(%s)&6: &f%s"
+stafflist-empty: "&eNessun membro dello staff visibile e attualmente online."

@@ -96,6 +96,11 @@ commands:
     usage: /enderchest [player]
     aliases: [ec, echest]
     permission: spigotessentials.enderchest.self
+  backpack:
+    description: Open your or another player's backpack.
+    usage: /backpack [player]
+    aliases: [bp]
+    permission: spigotessentials.backpack
   anvil:
     description: Open a virtual anvil.
     usage: /anvil
@@ -149,6 +154,25 @@ commands:
     usage: /invsee <player>
     aliases: [inv]
     permission: spigotessentials.invsee
+  msg:
+    description: Send a private message to a player.
+    usage: /msg <player> <message>
+    aliases: [message, tell, whisper, w]
+    permission: spigotessentials.msg
+  reply:
+    description: Reply to the last player who messaged you.
+    usage: /reply <message>
+    aliases: [r]
+    permission: spigotessentials.reply
+  ignore:
+    description: Ignore or unignore a player's private messages.
+    usage: /ignore <player>
+    permission: spigotessentials.ignore
+  msgtoggle:
+    description: Toggle whether you accept private messages.
+    usage: /msgtoggle
+    aliases: [togglemsg]
+    permission: spigotessentials.msgtoggle
   playerweather:
     description: Set your personal weather.
     usage: /playerweather <clear|rain|reset> [player]
@@ -285,6 +309,7 @@ permissions:
       spigotessentials.speed: true
       spigotessentials.workbench: true
       spigotessentials.enderchest.*: true
+      spigotessentials.backpack.*: true
       spigotessentials.anvil: true
       spigotessentials.grindstone: true
       spigotessentials.loom: true
@@ -297,6 +322,10 @@ permissions:
       spigotessentials.hat: true
       spigotessentials.afk: true
       spigotessentials.invsee: true
+      spigotessentials.msg: true
+      spigotessentials.reply: true
+      spigotessentials.ignore: true
+      spigotessentials.msgtoggle: true
       spigotessentials.playerweather.*: true
       spigotessentials.playertime.*: true
       spigotessentials.time: true
@@ -483,6 +512,21 @@ permissions:
     description: Allows opening others' ender chests
     default: op
 
+  spigotessentials.backpack.*:
+    description: Grants all backpack permissions
+    default: op
+    children:
+      spigotessentials.backpack: true
+      spigotessentials.backpack.others: true
+
+  spigotessentials.backpack:
+    description: Allows opening your own backpack
+    default: true
+
+  spigotessentials.backpack.others:
+    description: Allows opening other players' backpacks
+    default: op
+
   spigotessentials.anvil:
     description: Allows opening a virtual anvil
     default: true
@@ -541,6 +585,22 @@ permissions:
   spigotessentials.invsee:
     description: Allows viewing other players' inventories
     default: op
+
+  spigotessentials.msg:
+    description: Allows sending private messages
+    default: true
+
+  spigotessentials.reply:
+    description: Allows replying to private messages
+    default: true
+
+  spigotessentials.ignore:
+    description: Allows ignoring private messages
+    default: true
+
+  spigotessentials.msgtoggle:
+    description: Allows toggling private message reception
+    default: true
 
   spigotessentials.playerweather.*:
     description: Grants all playerweather permissions

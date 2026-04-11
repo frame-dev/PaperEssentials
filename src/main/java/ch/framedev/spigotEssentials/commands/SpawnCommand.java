@@ -44,7 +44,7 @@ public class SpawnCommand extends AbstractCommand implements Listener {
         if (locationManager.saveLocation(player.getLocation())) {
             sendMessage(player, MessageConfig.SPAWN_SET);
         } else {
-            sendMessage(player, "§cFailed to save spawn location.");
+            sendMessage(player, MessageConfig.SPAWN_SAVE_FAILED);
         }
         return true;
     }

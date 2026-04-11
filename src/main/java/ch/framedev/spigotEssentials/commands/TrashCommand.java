@@ -26,7 +26,7 @@ public class TrashCommand extends AbstractCommand {
         }
 
         if (args.length != 0) {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/trash");
+            sendMessage(sender, MessageConfig.TRASH_USAGE);
             return true;
         }
 

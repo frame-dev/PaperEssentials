@@ -14,7 +14,7 @@ public class SpeedCommand extends AbstractCommand {
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 0 || args.length > 3) {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/speed <walk|fly> <0-10> [player]");
+            sendMessage(sender, MessageConfig.SPEED_USAGE);
             return false;
         }
 
@@ -71,7 +71,7 @@ public class SpeedCommand extends AbstractCommand {
             target.setWalkSpeed(minecraftSpeed);
             speedType = "walk";
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/speed <walk|fly> <0-10> [player]");
+            sendMessage(sender, MessageConfig.SPEED_USAGE);
             return false;
         }
 

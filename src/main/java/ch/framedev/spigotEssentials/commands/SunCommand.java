@@ -1,10 +1,12 @@
 package ch.framedev.spigotEssentials.commands;
 
+import ch.framedev.spigotEssentials.PaperEssentials;
 import ch.framedev.spigotEssentials.utils.MessageConfig;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,7 +15,8 @@ import org.jetbrains.annotations.NotNull;
 public class SunCommand extends AbstractCommand {
 
     @Override
-    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+    protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
+            @NotNull String @NotNull [] args) {
         if (!checkPermission(sender, "spigotessentials.weather", MessageConfig.NO_PERMISSION_SELF)) {
             return true;
         }
@@ -23,20 +26,26 @@ public class SunCommand extends AbstractCommand {
             world = player.getWorld();
         } else {
             if (args.length == 0) {
-                sendMessage(sender, "§cUsage from console: /sun <world>");
+                sendMessage(sender, MessageConfig.WORLD_COMMAND_CONSOLE_USAGE, "sun");
                 return false;
             }
             world = sender.getServer().getWorld(args[0]);
             if (world == null) {
-                sendMessage(sender, "§cWorld not found: " + args[0]);
+                sendMessage(sender, MessageConfig.WORLD_NOT_FOUND, args[0]);
                 return true;
             }
         }
 
-        world.setStorm(false);
-        world.setThundering(false);
-        world.setWeatherDuration(6000); // 5 minutes
-        sendMessage(sender, MessageConfig.WEATHER_SET_CLEAR);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                world.setStorm(false);
+                world.setThundering(false);
+                world.setWeatherDuration(6000); // 5 minutes
+                sendMessage(sender, MessageConfig.WEATHER_SET_CLEAR);
+            }
+        }.runTaskLater(PaperEssentials.getInstance(), 60L); // Delay to ensure weather change is applied
+                                                            // after command execution
         return true;
     }
 }

@@ -23,7 +23,7 @@ public class VirtualStationCommand extends AbstractCommand {
         }
 
         if (args.length != 0) {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/" + command.getName());
+            sendMessage(sender, MessageConfig.VIRTUAL_STATION_USAGE, command.getName());
             return true;
         }
 

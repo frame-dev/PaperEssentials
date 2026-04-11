@@ -15,7 +15,7 @@ public class PlayerWeatherCommand extends AbstractCommand {
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 0) {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/playerweather <clear|rain|reset> [player]");
+            sendMessage(sender, MessageConfig.PWEATHER_USAGE);
             return false;
         }
 
@@ -40,7 +40,7 @@ public class PlayerWeatherCommand extends AbstractCommand {
             }
             return setWeather(sender, target, args[0]);
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/playerweather <clear|rain|reset> [player]");
+            sendMessage(sender, MessageConfig.PWEATHER_USAGE);
             return false;
         }
     }

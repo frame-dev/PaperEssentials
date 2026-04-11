@@ -23,12 +23,12 @@ public class NightCommand extends AbstractCommand {
             world = player.getWorld();
         } else {
             if (args.length == 0) {
-                sendMessage(sender, "§cUsage from console: /night <world>");
+                sendMessage(sender, MessageConfig.WORLD_COMMAND_CONSOLE_USAGE, "night");
                 return false;
             }
             world = sender.getServer().getWorld(args[0]);
             if (world == null) {
-                sendMessage(sender, "§cWorld not found: " + args[0]);
+                sendMessage(sender, MessageConfig.WORLD_NOT_FOUND, args[0]);
                 return true;
             }
         }

@@ -14,7 +14,7 @@ public class PlayerTimeCommand extends AbstractCommand {
     @Override
     protected boolean execute(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (args.length == 0) {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/playertime <time|reset> [player]");
+            sendMessage(sender, MessageConfig.PTIME_USAGE);
             return false;
         }
 
@@ -39,7 +39,7 @@ public class PlayerTimeCommand extends AbstractCommand {
             }
             return setTime(sender, target, args[0]);
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/playertime <time|reset> [player]");
+            sendMessage(sender, MessageConfig.PTIME_USAGE);
             return false;
         }
     }

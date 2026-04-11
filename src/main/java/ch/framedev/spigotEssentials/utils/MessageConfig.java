@@ -5,12 +5,17 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 /**
@@ -19,6 +24,11 @@ import java.nio.file.Files;
  */
 public class MessageConfig {
     private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacyAmpersand();
+    private static final String[] EXAMPLE_MESSAGE_RESOURCES = {
+            "message-examples/messages_de.yml",
+            "message-examples/messages_fr.yml",
+            "message-examples/messages_it.yml"
+    };
 
     private static FileConfiguration messagesConfig;
     private static File messagesFile;
@@ -31,12 +41,15 @@ public class MessageConfig {
 
     // Command messages
     public static String INVALID_USAGE;
+    public static String WORLD_COMMAND_CONSOLE_USAGE;
+    public static String WORLD_NOT_FOUND;
 
     // GameMode messages
     public static String GAMEMODE_CHANGED_SELF;
     public static String GAMEMODE_CHANGED_OTHER;
     public static String GAMEMODE_CHANGED_TARGET;
     public static String GAMEMODE_INVALID;
+    public static String GAMEMODE_USAGE;
 
     // Fly messages
     public static String FLY_ENABLED_SELF;
@@ -45,16 +58,20 @@ public class MessageConfig {
     public static String FLY_DISABLED_OTHER;
     public static String FLY_ENABLED_TARGET;
     public static String FLY_DISABLED_TARGET;
+    public static String FLY_USAGE;
 
     // Heal messages
     public static String HEAL_SELF;
     public static String HEAL_OTHER;
     public static String HEAL_TARGET;
+    public static String HEAL_USAGE;
+    public static String HEAL_ATTRIBUTE_MISSING;
 
     // Feed messages
     public static String FEED_SELF;
     public static String FEED_OTHER;
     public static String FEED_TARGET;
+    public static String FEED_USAGE;
 
     // God mode messages
     public static String GOD_ENABLED_SELF;
@@ -63,6 +80,7 @@ public class MessageConfig {
     public static String GOD_DISABLED_OTHER;
     public static String GOD_ENABLED_TARGET;
     public static String GOD_DISABLED_TARGET;
+    public static String GOD_USAGE;
 
     // Home messages
     public static String HOME_SET;
@@ -73,6 +91,13 @@ public class MessageConfig {
     public static String HOME_TELEPORTED_NAMED;
     public static String HOME_DELETED;
     public static String HOME_DELETED_NAMED;
+    public static String SETHOME_USAGE;
+    public static String HOME_USAGE;
+    public static String DELHOME_USAGE;
+    public static String HOME_SAVE_FAILED;
+    public static String HOME_DELETE_FAILED;
+    public static String HOME_DELETE_NOT_SET;
+    public static String HOME_DELETE_NOT_SET_NAMED;
 
     // Spawn messages
     public static String SPAWN_SET;
@@ -80,6 +105,7 @@ public class MessageConfig {
     public static String SPAWN_NOT_SET;
     public static String SPAWN_TELEPORTED_RESPAWN;
     public static String SPAWN_TELEPORTED_JOIN;
+    public static String SPAWN_SAVE_FAILED;
 
     // Back messages
     public static String BACK_TELEPORTED;
@@ -105,11 +131,13 @@ public class MessageConfig {
     public static String CLEAR_SELF;
     public static String CLEAR_OTHER;
     public static String CLEAR_TARGET;
+    public static String CLEAR_USAGE;
 
     // Speed command messages
     public static String SPEED_SET;
     public static String SPEED_SET_OTHER;
     public static String SPEED_INVALID;
+    public static String SPEED_USAGE;
 
     // Workbench messages
     public static String WORKBENCH_OPENED;
@@ -117,12 +145,39 @@ public class MessageConfig {
     // Enderchest messages
     public static String ENDERCHEST_OPENED;
     public static String ENDERCHEST_OPENED_OTHER;
+    public static String ENDERCHEST_USAGE;
+    public static String BACKPACK_OPENED_SELF;
+    public static String BACKPACK_OPENED_OTHER;
+    public static String BACKPACK_USAGE;
+    public static String BACKPACK_TITLE;
+    public static String BACKPACK_LOAD_FAILED;
+    public static String BACKPACK_SAVE_FAILED;
     public static String VIRTUAL_STATION_OPENED;
+    public static String VIRTUAL_STATION_USAGE;
     public static String TRASH_OPENED;
     public static String TRASH_TITLE;
+    public static String TRASH_USAGE;
 
     // Invsee messages
     public static String INVSEE_OPENED;
+    public static String INVSEE_USAGE;
+
+    // Private messaging messages
+    public static String MSG_USAGE;
+    public static String MSG_SENT;
+    public static String MSG_RECEIVED;
+    public static String MSG_CANNOT_SELF;
+    public static String MSG_TARGET_DISABLED;
+    public static String MSG_IGNORED;
+    public static String REPLY_USAGE;
+    public static String REPLY_NO_TARGET;
+    public static String REPLY_PLAYER_OFFLINE;
+    public static String IGNORE_USAGE;
+    public static String IGNORE_ENABLED;
+    public static String IGNORE_DISABLED;
+    public static String MSGTOGGLE_USAGE;
+    public static String MSGTOGGLE_ENABLED;
+    public static String MSGTOGGLE_DISABLED;
 
     // Suicide command messages
     public static String SUICIDE_SUCCESS;
@@ -130,6 +185,7 @@ public class MessageConfig {
     // Ping command messages
     public static String PING_SELF;
     public static String PING_OTHER;
+    public static String PING_USAGE;
 
     // Hat command messages
     public static String HAT_SET;
@@ -152,6 +208,7 @@ public class MessageConfig {
     public static String PWEATHER_RESET;
     public static String PWEATHER_RESET_OTHER;
     public static String PWEATHER_INVALID;
+    public static String PWEATHER_USAGE;
 
     // Player time messages
     public static String PTIME_SET;
@@ -159,6 +216,7 @@ public class MessageConfig {
     public static String PTIME_RESET;
     public static String PTIME_RESET_OTHER;
     public static String PTIME_INVALID;
+    public static String PTIME_USAGE;
 
     // World time messages
     public static String TIME_SET_DAY;
@@ -204,6 +262,9 @@ public class MessageConfig {
     public static String VANISH_ENABLED;
     public static String VANISH_DISABLED;
 
+    // Teleport command messages
+    public static String TELEPORT_REQUEST_USAGE;
+
     // Broadcast messages
     public static String BROADCAST_FORMAT;
     public static String BROADCAST_USAGE;
@@ -234,6 +295,7 @@ public class MessageConfig {
     public static String STAFFCHAT_TOGGLE_ON;
     public static String STAFFCHAT_TOGGLE_OFF;
     public static String STAFFCHAT_FORMAT;
+    public static String STAFFCHAT_USAGE;
     public static String WARN_USAGE;
     public static String WARN_ADDED;
     public static String WARN_TARGET;
@@ -274,7 +336,10 @@ public class MessageConfig {
             }
         }
 
-        messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
+        exportExampleMessageFiles(plugin);
+
+        messagesConfig = loadYamlConfiguration(messagesFile);
+        mergeDefaults(plugin);
         loadMessages();
     }
 
@@ -282,8 +347,139 @@ public class MessageConfig {
      * Reload messages from the messages.yml file
      */
     public static void reload() {
-        messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
+        messagesConfig = loadYamlConfiguration(messagesFile);
+        mergeDefaults(PaperEssentials.getInstance());
         loadMessages();
+    }
+
+    private static void exportExampleMessageFiles(PaperEssentials plugin) {
+        for (String resourcePath : EXAMPLE_MESSAGE_RESOURCES) {
+            File targetFile = new File(plugin.getDataFolder(), resourcePath);
+            if (targetFile.exists()) {
+                continue;
+            }
+
+            try {
+                plugin.saveResource(resourcePath, false);
+            } catch (IllegalArgumentException exception) {
+                plugin.getLogger().warning("Could not export bundled message example: " + resourcePath);
+            }
+        }
+    }
+
+    private static void mergeDefaults(PaperEssentials plugin) {
+        try (InputStream inputStream = plugin.getResource("messages.yml")) {
+            if (inputStream == null) {
+                return;
+            }
+
+            YamlConfiguration defaultMessages = loadYamlConfiguration(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            if (mergeMissingEntries(messagesConfig, defaultMessages)) {
+                messagesConfig.save(messagesFile);
+                messagesConfig = loadYamlConfiguration(messagesFile);
+                plugin.getLogger().info("Updated messages.yml with new default values.");
+            }
+        } catch (IOException | InvalidConfigurationException exception) {
+            plugin.getLogger().warning("Could not update messages.yml defaults: " + exception.getMessage());
+        }
+    }
+
+    private static YamlConfiguration loadYamlConfiguration(File file) {
+        YamlConfiguration configuration = new YamlConfiguration();
+        configuration.options().parseComments(true);
+
+        if (!file.exists()) {
+            return configuration;
+        }
+
+        try {
+            configuration.load(file);
+        } catch (IOException | InvalidConfigurationException exception) {
+            PaperEssentials.getInstance().getLogger().warning("Could not load " + file.getName() + ": " + exception.getMessage());
+        }
+
+        return configuration;
+    }
+
+    private static YamlConfiguration loadYamlConfiguration(InputStreamReader reader) throws IOException, InvalidConfigurationException {
+        YamlConfiguration configuration = new YamlConfiguration();
+        configuration.options().parseComments(true);
+        configuration.load(reader);
+        return configuration;
+    }
+
+    private static boolean mergeMissingEntries(FileConfiguration currentConfig, FileConfiguration defaultConfig) {
+        FileConfigurationOptions currentOptions = currentConfig.options();
+        FileConfigurationOptions defaultOptions = defaultConfig.options();
+        boolean changed = false;
+
+        currentOptions.parseComments(true);
+        defaultOptions.parseComments(true);
+
+        if (currentOptions.getHeader().isEmpty() && !defaultOptions.getHeader().isEmpty()) {
+            currentOptions.setHeader(defaultOptions.getHeader());
+            changed = true;
+        }
+
+        if (currentOptions.getFooter().isEmpty() && !defaultOptions.getFooter().isEmpty()) {
+            currentOptions.setFooter(defaultOptions.getFooter());
+            changed = true;
+        }
+
+        return mergeSection(currentConfig, defaultConfig) || changed;
+    }
+
+    private static boolean mergeSection(ConfigurationSection currentSection, ConfigurationSection defaultSection) {
+        boolean changed = false;
+
+        for (String key : defaultSection.getKeys(false)) {
+            Object defaultValue = defaultSection.get(key);
+            boolean isDefaultSection = defaultValue instanceof ConfigurationSection;
+
+            if (isDefaultSection) {
+                ConfigurationSection currentChild = currentSection.getConfigurationSection(key);
+                if (currentChild == null) {
+                    currentChild = currentSection.createSection(key);
+                    changed = true;
+                }
+
+                if (copyCommentsIfMissing(currentSection, defaultSection, key)) {
+                    changed = true;
+                }
+
+                if (mergeSection(currentChild, (ConfigurationSection) defaultValue)) {
+                    changed = true;
+                }
+                continue;
+            }
+
+            if (!currentSection.contains(key, true)) {
+                currentSection.set(key, defaultValue);
+                changed = true;
+            }
+
+            if (copyCommentsIfMissing(currentSection, defaultSection, key)) {
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private static boolean copyCommentsIfMissing(ConfigurationSection currentSection, ConfigurationSection defaultSection, String key) {
+        boolean changed = false;
+
+        if (currentSection.getComments(key).isEmpty() && !defaultSection.getComments(key).isEmpty()) {
+            currentSection.setComments(key, defaultSection.getComments(key));
+            changed = true;
+        }
+
+        if (currentSection.getInlineComments(key).isEmpty() && !defaultSection.getInlineComments(key).isEmpty()) {
+            currentSection.setInlineComments(key, defaultSection.getInlineComments(key));
+            changed = true;
+        }
+
+        return changed;
     }
 
     /**
@@ -298,12 +494,15 @@ public class MessageConfig {
 
         // Command messages
         INVALID_USAGE = colorize(messagesConfig.getString("invalid-usage", "&cInvalid usage. Use: %s"));
+        WORLD_COMMAND_CONSOLE_USAGE = colorize(messagesConfig.getString("world-command-console-usage", "&cUsage from console: /%s <world>"));
+        WORLD_NOT_FOUND = colorize(messagesConfig.getString("world-not-found", "&cWorld not found: %s"));
 
         // GameMode messages
         GAMEMODE_CHANGED_SELF = colorize(messagesConfig.getString("gamemode-changed-self", "&aYour game mode has been changed to %s."));
         GAMEMODE_CHANGED_OTHER = colorize(messagesConfig.getString("gamemode-changed-other", "&a%s's game mode has been changed to %s."));
         GAMEMODE_CHANGED_TARGET = colorize(messagesConfig.getString("gamemode-changed-target", "&aYour game mode has been changed to %s."));
         GAMEMODE_INVALID = colorize(messagesConfig.getString("gamemode-invalid", "&cInvalid game mode. Use survival, creative, adventure, or spectator."));
+        GAMEMODE_USAGE = colorize(messagesConfig.getString("gamemode-usage", "&cUsage: /gamemode <mode> [player]"));
 
         // Fly messages
         FLY_ENABLED_SELF = colorize(messagesConfig.getString("fly-enabled-self", "&aFly mode enabled."));
@@ -312,16 +511,20 @@ public class MessageConfig {
         FLY_DISABLED_OTHER = colorize(messagesConfig.getString("fly-disabled-other", "&cFly mode disabled for %s."));
         FLY_ENABLED_TARGET = colorize(messagesConfig.getString("fly-enabled-target", "&aYour fly mode has been enabled."));
         FLY_DISABLED_TARGET = colorize(messagesConfig.getString("fly-disabled-target", "&cYour fly mode has been disabled."));
+        FLY_USAGE = colorize(messagesConfig.getString("fly-usage", "&cUsage: /fly [player]"));
 
         // Heal messages
         HEAL_SELF = colorize(messagesConfig.getString("heal-self", "&aYou have been healed."));
         HEAL_OTHER = colorize(messagesConfig.getString("heal-other", "&aYou have healed %s."));
         HEAL_TARGET = colorize(messagesConfig.getString("heal-target", "&aYou have been healed by %s."));
+        HEAL_USAGE = colorize(messagesConfig.getString("heal-usage", "&cUsage: /heal [player]"));
+        HEAL_ATTRIBUTE_MISSING = colorize(messagesConfig.getString("heal-attribute-missing", "&cCould not retrieve max health attribute."));
 
         // Feed messages
         FEED_SELF = colorize(messagesConfig.getString("feed-self", "&aYou have been fed."));
         FEED_OTHER = colorize(messagesConfig.getString("feed-other", "&aYou have fed %s."));
         FEED_TARGET = colorize(messagesConfig.getString("feed-target", "&aYou have been fed by %s."));
+        FEED_USAGE = colorize(messagesConfig.getString("feed-usage", "&cUsage: /feed [player]"));
 
         // God mode messages
         GOD_ENABLED_SELF = colorize(messagesConfig.getString("god-enabled-self", "&aGod mode enabled."));
@@ -330,6 +533,7 @@ public class MessageConfig {
         GOD_DISABLED_OTHER = colorize(messagesConfig.getString("god-disabled-other", "&cGod mode disabled for %s."));
         GOD_ENABLED_TARGET = colorize(messagesConfig.getString("god-enabled-target", "&aYour god mode has been enabled."));
         GOD_DISABLED_TARGET = colorize(messagesConfig.getString("god-disabled-target", "&cYour god mode has been disabled."));
+        GOD_USAGE = colorize(messagesConfig.getString("god-usage", "&cUsage: /god [player]"));
 
         // Home messages
         HOME_SET = colorize(messagesConfig.getString("home-set", "&aHome set successfully."));
@@ -340,6 +544,13 @@ public class MessageConfig {
         HOME_TELEPORTED_NAMED = colorize(messagesConfig.getString("home-teleported-named", "&aTeleported to home '%s'."));
         HOME_DELETED = colorize(messagesConfig.getString("home-deleted", "&aHome deleted successfully."));
         HOME_DELETED_NAMED = colorize(messagesConfig.getString("home-deleted-named", "&aHome '%s' deleted successfully."));
+        SETHOME_USAGE = colorize(messagesConfig.getString("sethome-usage", "&cUsage: /sethome [name]"));
+        HOME_USAGE = colorize(messagesConfig.getString("home-usage", "&cUsage: /home [name]"));
+        DELHOME_USAGE = colorize(messagesConfig.getString("delhome-usage", "&cUsage: /delhome [name]"));
+        HOME_SAVE_FAILED = colorize(messagesConfig.getString("home-save-failed", "&cFailed to save home location."));
+        HOME_DELETE_FAILED = colorize(messagesConfig.getString("home-delete-failed", "&cFailed to delete home location."));
+        HOME_DELETE_NOT_SET = colorize(messagesConfig.getString("home-delete-not-set", "&cHome not set."));
+        HOME_DELETE_NOT_SET_NAMED = colorize(messagesConfig.getString("home-delete-not-set-named", "&cHome '%s' not set."));
 
         // Spawn messages
         SPAWN_SET = colorize(messagesConfig.getString("spawn-set", "&aSpawn point set!"));
@@ -347,6 +558,7 @@ public class MessageConfig {
         SPAWN_NOT_SET = colorize(messagesConfig.getString("spawn-not-set", "&cSpawn point is not set."));
         SPAWN_TELEPORTED_RESPAWN = colorize(messagesConfig.getString("spawn-teleported-respawn", "&aTeleported to spawn point on respawn!"));
         SPAWN_TELEPORTED_JOIN = colorize(messagesConfig.getString("spawn-teleported-join", "&aTeleported to spawn point on join!"));
+        SPAWN_SAVE_FAILED = colorize(messagesConfig.getString("spawn-save-failed", "&cFailed to save spawn location."));
 
         // Back messages
         BACK_TELEPORTED = colorize(messagesConfig.getString("back-teleported", "&aTeleported back to your last location!"));
@@ -372,11 +584,13 @@ public class MessageConfig {
         CLEAR_SELF = colorize(messagesConfig.getString("clear-self", "&aYour inventory has been cleared."));
         CLEAR_OTHER = colorize(messagesConfig.getString("clear-other", "&aCleared %s's inventory."));
         CLEAR_TARGET = colorize(messagesConfig.getString("clear-target", "&aYour inventory has been cleared by %s."));
+        CLEAR_USAGE = colorize(messagesConfig.getString("clear-usage", "&cUsage: /clear [player]"));
 
         // Speed command messages
         SPEED_SET = colorize(messagesConfig.getString("speed-set", "&aYour %s speed has been set to %s."));
         SPEED_SET_OTHER = colorize(messagesConfig.getString("speed-set-other", "&aSet %s's %s speed to %s."));
         SPEED_INVALID = colorize(messagesConfig.getString("speed-invalid", "&cSpeed must be a number between 0 and 10."));
+        SPEED_USAGE = colorize(messagesConfig.getString("speed-usage", "&cUsage: /speed <walk|fly> <0-10> [player]"));
 
         // Workbench messages
         WORKBENCH_OPENED = colorize(messagesConfig.getString("workbench-opened", "&aOpened crafting table."));
@@ -384,12 +598,39 @@ public class MessageConfig {
         // Enderchest messages
         ENDERCHEST_OPENED = colorize(messagesConfig.getString("enderchest-opened", "&aOpened ender chest."));
         ENDERCHEST_OPENED_OTHER = colorize(messagesConfig.getString("enderchest-opened-other", "&aOpened %s's ender chest."));
+        ENDERCHEST_USAGE = colorize(messagesConfig.getString("enderchest-usage", "&cUsage: /enderchest [player]"));
+        BACKPACK_OPENED_SELF = colorize(messagesConfig.getString("backpack-opened-self", "&aOpened your backpack."));
+        BACKPACK_OPENED_OTHER = colorize(messagesConfig.getString("backpack-opened-other", "&aOpened %s's backpack."));
+        BACKPACK_USAGE = colorize(messagesConfig.getString("backpack-usage", "&cUsage: /backpack [player]"));
+        BACKPACK_TITLE = colorize(messagesConfig.getString("backpack-title", "&8Backpack: %s"));
+        BACKPACK_LOAD_FAILED = colorize(messagesConfig.getString("backpack-load-failed", "&cCould not load backpack data."));
+        BACKPACK_SAVE_FAILED = colorize(messagesConfig.getString("backpack-save-failed", "&cCould not save backpack data."));
         VIRTUAL_STATION_OPENED = colorize(messagesConfig.getString("virtual-station-opened", "&aOpened %s."));
+        VIRTUAL_STATION_USAGE = colorize(messagesConfig.getString("virtual-station-usage", "&cUsage: /%s"));
         TRASH_OPENED = colorize(messagesConfig.getString("trash-opened", "&aOpened trash inventory."));
         TRASH_TITLE = colorize(messagesConfig.getString("trash-title", "&8Trash"));
+        TRASH_USAGE = colorize(messagesConfig.getString("trash-usage", "&cUsage: /trash"));
 
         // Invsee messages
         INVSEE_OPENED = colorize(messagesConfig.getString("invsee-opened", "&aOpened %s's inventory."));
+        INVSEE_USAGE = colorize(messagesConfig.getString("invsee-usage", "&cUsage: /invsee <player>"));
+
+        // Private messaging messages
+        MSG_USAGE = colorize(messagesConfig.getString("msg-usage", "&cUsage: /msg <player> <message>"));
+        MSG_SENT = colorize(messagesConfig.getString("msg-sent", "&8[&dMe &7-> &d%s&8] &f%s"));
+        MSG_RECEIVED = colorize(messagesConfig.getString("msg-received", "&8[&d%s &7-> &dMe&8] &f%s"));
+        MSG_CANNOT_SELF = colorize(messagesConfig.getString("msg-cannot-self", "&cYou cannot message yourself."));
+        MSG_TARGET_DISABLED = colorize(messagesConfig.getString("msg-target-disabled", "&c%s is not accepting private messages."));
+        MSG_IGNORED = colorize(messagesConfig.getString("msg-ignored", "&c%s is ignoring you."));
+        REPLY_USAGE = colorize(messagesConfig.getString("reply-usage", "&cUsage: /reply <message>"));
+        REPLY_NO_TARGET = colorize(messagesConfig.getString("reply-no-target", "&cYou have nobody to reply to."));
+        REPLY_PLAYER_OFFLINE = colorize(messagesConfig.getString("reply-player-offline", "&cThat player is no longer online."));
+        IGNORE_USAGE = colorize(messagesConfig.getString("ignore-usage", "&cUsage: /ignore <player>"));
+        IGNORE_ENABLED = colorize(messagesConfig.getString("ignore-enabled", "&aYou are now ignoring %s."));
+        IGNORE_DISABLED = colorize(messagesConfig.getString("ignore-disabled", "&aYou are no longer ignoring %s."));
+        MSGTOGGLE_USAGE = colorize(messagesConfig.getString("msgtoggle-usage", "&cUsage: /msgtoggle"));
+        MSGTOGGLE_ENABLED = colorize(messagesConfig.getString("msgtoggle-enabled", "&cYou are no longer accepting private messages."));
+        MSGTOGGLE_DISABLED = colorize(messagesConfig.getString("msgtoggle-disabled", "&aYou are now accepting private messages."));
 
         // Suicide command messages
         SUICIDE_SUCCESS = colorize(messagesConfig.getString("suicide-success", "&cYou have committed suicide."));
@@ -397,6 +638,7 @@ public class MessageConfig {
         // Ping command messages
         PING_SELF = colorize(messagesConfig.getString("ping-self", "&aYour ping: %sms"));
         PING_OTHER = colorize(messagesConfig.getString("ping-other", "&a%s's ping: %sms"));
+        PING_USAGE = colorize(messagesConfig.getString("ping-usage", "&cUsage: /ping [player]"));
 
         // Hat command messages
         HAT_SET = colorize(messagesConfig.getString("hat-set", "&aYou are now wearing %s as a hat!"));
@@ -419,6 +661,7 @@ public class MessageConfig {
         PWEATHER_RESET = colorize(messagesConfig.getString("pweather-reset", "&aYour personal weather has been reset."));
         PWEATHER_RESET_OTHER = colorize(messagesConfig.getString("pweather-reset-other", "&aReset %s's personal weather."));
         PWEATHER_INVALID = colorize(messagesConfig.getString("pweather-invalid", "&cInvalid weather type. Use: clear, rain, or reset."));
+        PWEATHER_USAGE = colorize(messagesConfig.getString("pweather-usage", "&cUsage: /playerweather <clear|rain|reset> [player]"));
 
         // Player time messages
         PTIME_SET = colorize(messagesConfig.getString("ptime-set", "&aYour personal time has been set to %s."));
@@ -426,6 +669,7 @@ public class MessageConfig {
         PTIME_RESET = colorize(messagesConfig.getString("ptime-reset", "&aYour personal time has been reset."));
         PTIME_RESET_OTHER = colorize(messagesConfig.getString("ptime-reset-other", "&aReset %s's personal time."));
         PTIME_INVALID = colorize(messagesConfig.getString("ptime-invalid", "&cInvalid time. Use: day, night, noon, midnight, or a number (0-24000), or reset."));
+        PTIME_USAGE = colorize(messagesConfig.getString("ptime-usage", "&cUsage: /playertime <time|reset> [player]"));
 
         // World time messages
         TIME_SET_DAY = colorize(messagesConfig.getString("time-set-day", "&aTime set to day."));
@@ -471,6 +715,9 @@ public class MessageConfig {
         VANISH_ENABLED = colorize(messagesConfig.getString("vanish-enabled", "&aVanish mode enabled. You are now invisible."));
         VANISH_DISABLED = colorize(messagesConfig.getString("vanish-disabled", "&cVanish mode disabled. You are now visible."));
 
+        // Teleport command messages
+        TELEPORT_REQUEST_USAGE = colorize(messagesConfig.getString("teleport-request-usage", "&cUsage: /%s <player>"));
+
         // Broadcast messages
         BROADCAST_FORMAT = colorize(messagesConfig.getString("broadcast-format", "&6[Broadcast] &f%message%"));
         BROADCAST_USAGE = colorize(messagesConfig.getString("broadcast-usage", "&cUsage: /broadcast <message>"));
@@ -501,6 +748,7 @@ public class MessageConfig {
         STAFFCHAT_TOGGLE_ON = colorize(messagesConfig.getString("staffchat-toggle-on", "&aStaff chat mode enabled."));
         STAFFCHAT_TOGGLE_OFF = colorize(messagesConfig.getString("staffchat-toggle-off", "&cStaff chat mode disabled."));
         STAFFCHAT_FORMAT = colorize(messagesConfig.getString("staffchat-format", "&8[StaffChat] &b%s&8: &f%s"));
+        STAFFCHAT_USAGE = colorize(messagesConfig.getString("staffchat-usage", "&cUsage: /staffchat <message>"));
         WARN_USAGE = colorize(messagesConfig.getString("warn-usage", "&cUsage: /warn <player> [reason]"));
         WARN_ADDED = colorize(messagesConfig.getString("warn-added", "&eAdded a warning to %s. Reason: %s"));
         WARN_TARGET = colorize(messagesConfig.getString("warn-target", "&eYou have received a warning. Reason: %s"));

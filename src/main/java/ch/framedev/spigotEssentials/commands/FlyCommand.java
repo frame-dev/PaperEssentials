@@ -32,7 +32,7 @@ public class FlyCommand extends AbstractCommand {
             toggleFly(sender, target);
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/fly [player]");
+            sendMessage(sender, MessageConfig.FLY_USAGE);
             return false;
         }
     }

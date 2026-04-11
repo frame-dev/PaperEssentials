@@ -2,11 +2,15 @@ package ch.framedev.spigotEssentials;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 
 public class LocationManager {
@@ -86,6 +90,29 @@ public class LocationManager {
      */
     public boolean hasLocation() {
         return config.contains(locationName);
+    }
+
+    /**
+     * List the saved child location keys beneath a section, such as a player's homes.
+     * @param sectionName The root section name
+     * @return Sorted child keys, or an empty list if none exist
+     */
+    public static List<String> getLocationNames(String sectionName) {
+        PaperEssentials plugin = PaperEssentials.getInstance();
+        File file = new File(plugin.getDataFolder(), "locations.yml");
+        if (!file.exists()) {
+            return List.of();
+        }
+
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        ConfigurationSection section = config.getConfigurationSection(sectionName);
+        if (section == null) {
+            return List.of();
+        }
+
+        return section.getKeys(false).stream()
+                .sorted(Comparator.naturalOrder())
+                .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
     }
 
     private String locationToString(Location location) {

@@ -37,7 +37,7 @@ public class PingCommand extends AbstractCommand {
             sendMessage(sender, MessageConfig.PING_OTHER, target.getName(), String.valueOf(ping));
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/ping [player]");
+            sendMessage(sender, MessageConfig.PING_USAGE);
             return false;
         }
     }

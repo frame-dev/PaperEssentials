@@ -40,7 +40,7 @@ public class ClearCommand extends AbstractCommand {
             }
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/clear [player]");
+            sendMessage(sender, MessageConfig.CLEAR_USAGE);
             return false;
         }
     }

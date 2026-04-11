@@ -42,7 +42,7 @@ public class HomeCommand extends AbstractCommand {
             if (lm.saveLocation(player.getLocation())) {
                 sendMessage(player, MessageConfig.HOME_SET);
             } else {
-                sendMessage(player, "§cFailed to save home location.");
+                sendMessage(player, MessageConfig.HOME_SAVE_FAILED);
             }
             return true;
         } else if (args.length == 1) {
@@ -50,11 +50,11 @@ public class HomeCommand extends AbstractCommand {
             if (lm.saveLocation(player.getLocation())) {
                 sendMessage(player, MessageConfig.HOME_SET_NAMED, args[0]);
             } else {
-                sendMessage(player, "§cFailed to save home location.");
+                sendMessage(player, MessageConfig.HOME_SAVE_FAILED);
             }
             return true;
         } else {
-            sendMessage(player, MessageConfig.INVALID_USAGE, "/sethome [name]");
+            sendMessage(player, MessageConfig.SETHOME_USAGE);
             return false;
         }
     }
@@ -99,7 +99,7 @@ public class HomeCommand extends AbstractCommand {
             sendMessage(player, MessageConfig.HOME_TELEPORTED_NAMED, args[0]);
             return true;
         } else {
-            sendMessage(player, MessageConfig.INVALID_USAGE, "/home [name]");
+            sendMessage(player, MessageConfig.HOME_USAGE);
             return false;
         }
     }
@@ -118,29 +118,29 @@ public class HomeCommand extends AbstractCommand {
         if (args.length == 0) {
             LocationManager lm = new LocationManager(player.getName() + ".home");
             if (!lm.hasLocation()) {
-                sendMessage(player, "§cHome not set.");
+                sendMessage(player, MessageConfig.HOME_DELETE_NOT_SET);
                 return true;
             }
             if (lm.deleteLocation()) {
                 sendMessage(player, MessageConfig.HOME_DELETED);
             } else {
-                sendMessage(player, "§cFailed to delete home location.");
+                sendMessage(player, MessageConfig.HOME_DELETE_FAILED);
             }
             return true;
         } else if (args.length == 1) {
             LocationManager lm = new LocationManager(player.getName() + "." + args[0]);
             if (!lm.hasLocation()) {
-                sendMessage(player, "§cHome '%s' not set.", args[0]);
+                sendMessage(player, MessageConfig.HOME_DELETE_NOT_SET_NAMED, args[0]);
                 return true;
             }
             if (lm.deleteLocation()) {
                 sendMessage(player, MessageConfig.HOME_DELETED_NAMED, args[0]);
             } else {
-                sendMessage(player, "§cFailed to delete home location.");
+                sendMessage(player, MessageConfig.HOME_DELETE_FAILED);
             }
             return true;
         } else {
-            sendMessage(player, MessageConfig.INVALID_USAGE, "/delhome [name]");
+            sendMessage(player, MessageConfig.DELHOME_USAGE);
             return false;
         }
     }

@@ -32,7 +32,7 @@ public class GodModeCommand extends AbstractCommand {
             toggleGodMode(sender, target);
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/god [player]");
+            sendMessage(sender, MessageConfig.GOD_USAGE);
             return false;
         }
     }

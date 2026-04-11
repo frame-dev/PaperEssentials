@@ -12,9 +12,11 @@ import org.bukkit.command.TabCompleter;
 public class CommandManager {
 
     private final PaperEssentials plugin;
+    private final TabCompleter sharedTabCompleter;
 
     public CommandManager(PaperEssentials plugin) {
         this.plugin = plugin;
+        this.sharedTabCompleter = new CommandTabCompleter(plugin);
     }
 
     /**
@@ -63,6 +65,9 @@ public class CommandManager {
         registerCommand("speed", new SpeedCommand());
         registerCommand("workbench", new WorkbenchCommand());
         registerCommand("enderchest", new EnderChestCommand());
+        BackpackCommand backpackCommand = new BackpackCommand(plugin);
+        registerCommand("backpack", backpackCommand);
+        plugin.getServer().getPluginManager().registerEvents(backpackCommand, plugin);
         VirtualStationCommand virtualStationCommand = new VirtualStationCommand();
         registerCommand("anvil", virtualStationCommand);
         registerCommand("grindstone", virtualStationCommand);
@@ -77,6 +82,14 @@ public class CommandManager {
         registerCommand("invsee", new InvseeCommand());
         registerCommand("playerweather", new PlayerWeatherCommand());
         registerCommand("playertime", new PlayerTimeCommand());
+
+        // Private messaging commands
+        PrivateMessageCommand privateMessageCommand = new PrivateMessageCommand();
+        registerCommand("msg", privateMessageCommand);
+        registerCommand("reply", privateMessageCommand);
+        registerCommand("ignore", privateMessageCommand);
+        registerCommand("msgtoggle", privateMessageCommand);
+        plugin.getServer().getPluginManager().registerEvents(privateMessageCommand, plugin);
 
         // AFK command with listener
         AfkCommand afkCommand = new AfkCommand(plugin);
@@ -158,8 +171,6 @@ public class CommandManager {
         }
         
         command.setExecutor(executor);
-        if (tabCompleter != null) {
-            command.setTabCompleter(tabCompleter);
-        }
+        command.setTabCompleter(tabCompleter != null ? tabCompleter : sharedTabCompleter);
     }
 }

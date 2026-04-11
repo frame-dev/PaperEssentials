@@ -46,7 +46,7 @@ public class GameModeCommand extends AbstractCommand implements TabCompleter {
             }
             return result;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/gamemode <mode> [player]");
+            sendMessage(sender, MessageConfig.GAMEMODE_USAGE);
             return false;
         }
     }

@@ -26,7 +26,7 @@ public class StaffChatCommand extends AbstractCommand {
         if (args.length == 0) {
             Player player = asPlayer(sender);
             if (player == null) {
-                sendMessage(sender, MessageConfig.INVALID_USAGE, "/staffchat <message>");
+                sendMessage(sender, MessageConfig.STAFFCHAT_USAGE);
                 return true;
             }
 

@@ -24,7 +24,7 @@ public class InvseeCommand extends AbstractCommand {
         }
 
         if (args.length != 1) {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/invsee <player>");
+            sendMessage(sender, MessageConfig.INVSEE_USAGE);
             return false;
         }
 

@@ -18,6 +18,7 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 - **Personal Environment** - Set personal time and weather
 - **World Management** - Change world time and weather
 - **Utility Commands** - Speed, workbench, enderchest, repair, enchanting table, and more
+- **Backpack System** - Persistent configurable backpacks with item metadata preservation
 - **Inventory Management** - View and clear player inventories
 - **Broadcast System** - Send server-wide announcements
 - **Configurable Messages** - Fully customizable messages via messages.yml
@@ -34,6 +35,7 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 3. Restart your server
 4. Configure the plugin in `plugins/PaperEssentials/config.yml`
 5. Customize messages in `plugins/PaperEssentials/messages.yml`
+6. Optional: use the bundled examples in `plugins/PaperEssentials/message-examples/`
 
 ## Commands
 
@@ -130,6 +132,7 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 |---------|-------------|-------|---------|
 | `/workbench` | Open crafting table | `/workbench` | `/craft`, `/wb` |
 | `/enderchest` | Open ender chest | `/enderchest [player]` | `/ec`, `/echest` |
+| `/backpack` | Open your or another player's backpack | `/backpack [player]` | `/bp` |
 | `/invsee` | View player inventory | `/invsee <player>` | `/inv` |
 | `/repair` | Repair item or all items | `/repair [all]` | `/fix` |
 | `/enchantingtable` | Open enchanting table | `/enchantingtable` | `/etable` |
@@ -214,6 +217,8 @@ A comprehensive essentials plugin for Paper/Spigot servers with essential comman
 | `spigotessentials.workbench` | Open virtual crafting table | true |
 | `spigotessentials.enderchest.self` | Open own ender chest | true |
 | `spigotessentials.enderchest.others` | Open others' ender chests | op |
+| `spigotessentials.backpack` | Open your own backpack | true |
+| `spigotessentials.backpack.others` | Open other players' backpacks | op |
 | `spigotessentials.invsee` | View player inventories | op |
 | `spigotessentials.repair` | Repair item in hand | op |
 | `spigotessentials.repair.all` | Repair all items | op |
@@ -240,6 +245,9 @@ spawn-on-death: true
 # Back command
 back-command: true
 
+# Backpack size
+backpack-size: 27
+
 # AFK settings
 auto-afk-enabled: true
 auto-afk-time: 300  # Time in seconds before auto-AFK (5 minutes)
@@ -251,6 +259,11 @@ first-join-broadcast: true
 ### messages.yml
 
 All plugin messages are fully customizable. Use `&` for color codes (e.g., `&a` = green, `&c` = red).
+
+Bundled example translations are exported on startup to:
+- `plugins/PaperEssentials/message-examples/messages_de.yml`
+- `plugins/PaperEssentials/message-examples/messages_fr.yml`
+- `plugins/PaperEssentials/message-examples/messages_it.yml`
 
 **Example:**
 ```yaml

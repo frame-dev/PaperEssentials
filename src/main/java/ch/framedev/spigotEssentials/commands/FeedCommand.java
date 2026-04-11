@@ -32,7 +32,7 @@ public class FeedCommand extends AbstractCommand {
             feedPlayer(sender, target);
             return true;
         } else {
-            sendMessage(sender, MessageConfig.INVALID_USAGE, "/feed [player]");
+            sendMessage(sender, MessageConfig.FEED_USAGE);
             return false;
         }
     }
